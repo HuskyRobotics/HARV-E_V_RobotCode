@@ -28,10 +28,6 @@ public class DefaultDrive extends HarvDrive{
 	
 	@Override
 	public void update(double magY, double magRot){
-		if(Math.abs(magY) > 1)this.setMagY(1);
-		else this.setMagY(magY);
-		if(Math.abs(magRot) > 1)this.setMagRot(1);
-		else this.setMagRot(magRot);
 		
 		leftSide.set(this.getMagY() - this.getMagRot());
 		rightSide.set(this.getMagY() + this.getMagRot());
@@ -50,5 +46,13 @@ public class DefaultDrive extends HarvDrive{
 	@Override
 	public double getWheelSpeed() {
 		return 0;
+	}
+	
+	public Spark getLeftSide(){
+		return this.leftSide;
+	}
+	
+	public Spark getRightSide(){
+		return this.rightSide;
 	}
 }

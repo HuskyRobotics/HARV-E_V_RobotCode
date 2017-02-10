@@ -7,7 +7,6 @@ import org.usfirst.frc.team4585.robot.harve.model.drive.HarvDrive;
 import org.usfirst.frc.team4585.robot.harve.model.drive.MecanumDrive;
 import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
 import org.usfirst.frc.team4585.robot.harve.view.*;
-import java.util.Queue;
 
 public class HarvController {
 	HarvDrive drive;
@@ -35,7 +34,7 @@ public class HarvController {
 		millisPerIteration = 10;
 		rps = 1;
 		maxRotationPerIteration = 0;
-		drive = new MecanumDrive(0, 1, 2, 3);
+		drive = new DefaultDrive(0, 1);
 //		drive = new DefaultDrive(0,1);
 		input = new HarvInput(0);
 		autonomous = new HarvAutoController();
@@ -200,11 +199,13 @@ public class HarvController {
 		
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
 			input.update();
-			this.augmentedDriveControlV2();
+			//this.augmentedDriveControlV2();
+			magY = this.input.getJoystickInput(Axis.Y);
+			magRot = this.input.getJoystickInput(Axis.Z);
 			sensors.updateBIAcceleration();
 			this.showInformation();
 			time = System.currentTimeMillis();
-			drive.update(magX, magY, magRot);
+			drive.update(magRot, magY);
 		}
 	}
 	
