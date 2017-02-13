@@ -8,7 +8,6 @@ public class DefaultDrive extends HarvDrive{
 	public DefaultDrive(short leftSide, short rightSide){
 		this.leftSide = new Spark(leftSide);
 		this.rightSide = new Spark(rightSide);
-		this.rightSide.setInverted(true);
 	}
 	
 	public void invertMotors(){

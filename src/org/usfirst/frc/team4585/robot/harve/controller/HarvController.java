@@ -205,7 +205,7 @@ public class HarvController {
 			sensors.updateBIAcceleration();
 			this.showInformation();
 			time = System.currentTimeMillis();
-			drive.update(magRot, magY);
+			drive.update(magY, magRot);
 		}
 	}
 	
