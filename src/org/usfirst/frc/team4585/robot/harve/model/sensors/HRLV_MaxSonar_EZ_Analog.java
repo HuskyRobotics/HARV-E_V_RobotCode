@@ -9,7 +9,7 @@ public class HRLV_MaxSonar_EZ_Analog{
 	double correctionCoeff = 1.05;
 	int defaultSampleBuffer=20;
 
-	HRLV_MaxSonar_EZ_Analog(int AIO_port, int sampleBuffer) {
+	public HRLV_MaxSonar_EZ_Analog(int AIO_port, int sampleBuffer) {
 		input = new AnalogInput(AIO_port);
 		this.sampleBuffer = sampleBuffer;
 
@@ -18,7 +18,7 @@ public class HRLV_MaxSonar_EZ_Analog{
 
 	}
 
-	HRLV_MaxSonar_EZ_Analog(int AIO_port) {
+	public HRLV_MaxSonar_EZ_Analog(int AIO_port) {
 		input = new AnalogInput(AIO_port);
 		this.sampleBuffer = defaultSampleBuffer;
 

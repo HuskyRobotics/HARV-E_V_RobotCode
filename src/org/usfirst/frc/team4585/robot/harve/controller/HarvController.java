@@ -32,7 +32,7 @@ public class HarvController {
 		autonomous = new HarvAutoController();
 		dashboard = new SmartDashboard();
 		sensors = new Sensors();
-		sonarSensor = new HRLV_MaxSonar_EZ_Analog();
+		sonarSensor = new HRLV_MaxSonar_EZ_Analog(0, 20480);
 		time = 0;
 	}
 
