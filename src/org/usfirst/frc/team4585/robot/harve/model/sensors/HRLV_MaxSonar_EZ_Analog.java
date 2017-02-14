@@ -5,11 +5,10 @@ import edu.wpi.first.wpilibj.AnalogInput;
 public class HRLV_MaxSonar_EZ_Analog{
 	private AnalogInput input;
 	int sampleBuffer;
-	int millimetersPerVolt=976;//constant set by rangefinder at sea level
-	double correctionCoeff=1.05;
+	int millimetersPerVolt=976;//constant set by rangefinder
 	int defaultSampleBuffer=20;
 
-	public HRLV_MaxSonar_EZ_Analog(int AIO_port, int sampleBuffer) {
+	void HRLV_MaxSonar_EZ_Analog(int AIO_port, int sampleBuffer) {
 		input = new AnalogInput(AIO_port);
 		this.sampleBuffer = sampleBuffer;
 
@@ -18,7 +17,7 @@ public class HRLV_MaxSonar_EZ_Analog{
 
 	}
 
-	public HRLV_MaxSonar_EZ_Analog(int AIO_port) {
+	void HRLV_MaxSonar_EZ_Analog(int AIO_port) {
 		input = new AnalogInput(AIO_port);
 		this.sampleBuffer = defaultSampleBuffer;
 
@@ -36,21 +35,21 @@ public class HRLV_MaxSonar_EZ_Analog{
 	}
 	
 
-	public double getMillimeters() {
-		return (input.getAverageVoltage() * millimetersPerVolt*correctionCoeff);
+	int getMillimeters() {
+		return (int) input.getAverageVoltage() * millimetersPerVolt;
 	}
 
-	public double getInches() {
-		return (getMillimeters() * .03937);
+	double getInches() {
+		return getMillimeters() * .03937;
 	}
 
-	public double getCentimeters() {
-		return (getMillimeters() * 10);
+	double getCentimeters() {
+		return getMillimeters() * 10;
 	}
-	public double getVoltage(){
+	double getVoltage(){
 		return input.getAverageVoltage();
 	}
-	public int getValue(){
+	int getValue(){
 		return input.getAverageValue();
 	}
 

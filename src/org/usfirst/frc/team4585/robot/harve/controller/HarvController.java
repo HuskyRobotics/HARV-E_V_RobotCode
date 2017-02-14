@@ -2,17 +2,18 @@ package org.usfirst.frc.team4585.robot.harve.controller;
 
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import org.usfirst.frc.team4585.robot.harve.model.*;
-import org.usfirst.frc.team4585.robot.harve.model.drive.*;
+import org.usfirst.frc.team4585.robot.harve.model.drive.DefaultDrive;
+import org.usfirst.frc.team4585.robot.harve.model.drive.HarvDrive;
+import org.usfirst.frc.team4585.robot.harve.model.drive.MecanumDrive;
 import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
 import org.usfirst.frc.team4585.robot.harve.view.*;
 
 public class HarvController {
-	MecanumDrive drive;
+	HarvDrive drive;
 	HarvInput input;
 	HarvAutoController autonomous;
 	SmartDashboard dashboard;
 	Sensors sensors;
-	HRLV_MaxSonar_EZ_Analog rangefinder;
 	
 	final double millisBetweenIterations=20;
 
@@ -33,7 +34,7 @@ public class HarvController {
 		millisPerIteration = 10;
 		rps = 1;
 		maxRotationPerIteration = 0;
-		drive = new MecanumDrive(0, 1);
+		drive = new DefaultDrive(0, 1);
 //		drive = new DefaultDrive(0,1);
 		input = new HarvInput(0);
 		autonomous = new HarvAutoController();
@@ -41,7 +42,6 @@ public class HarvController {
 		sensors = new Sensors();
 		pMagRotSamples = new double[10];
 		time = 0;
-		rangefinder = new HRLV_MaxSonar_EZ_Analog(0, 30960);
 	}
 
 	private void findIntendedAngle(){//this method tries to get intended degrees close to the actual degrees of the robot
@@ -49,7 +49,7 @@ public class HarvController {
 		final double B = 2;
 		final double C = 1.1;
 		final double D = 1.5;
-		double y = (Math.pow(B * C, Math.abs(input.getJoystickInput(Axis.Z))) - A);
+		double y = (Math.pow(B * C,Math.abs(input.getJoystickInput(Axis.Z))) - A);
 		if(y >0 + 0.111)
 			intendedAngle += Math.copySign(y, input.getJoystickInput(Axis.Z)) * this.maxRotationPerIteration * D;//exponent curve close to robots acceleration
 		else
@@ -206,8 +206,6 @@ public class HarvController {
 			this.showInformation();
 			time = System.currentTimeMillis();
 			drive.update(magY, magRot);
-			
-			SmartDashboard.putNumber("Range", rangefinder.getInches());
 		}
 	}
 	
