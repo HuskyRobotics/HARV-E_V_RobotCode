@@ -28,8 +28,8 @@ public class DefaultDrive extends HarvDrive{
 	@Override
 	public void update(double magY, double magRot){
 		
-		leftSide.set(this.getMagY() - this.getMagRot());
-		rightSide.set(this.getMagY() + this.getMagRot());
+		leftSide.set(magRot - magY);
+		rightSide.set(magRot + magY);
 	}
 
 	@Override

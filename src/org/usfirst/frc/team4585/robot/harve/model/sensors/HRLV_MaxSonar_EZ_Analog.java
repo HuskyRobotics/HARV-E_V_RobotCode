@@ -7,6 +7,7 @@ public class HRLV_MaxSonar_EZ_Analog{
 	int sampleBuffer;
 	int millimetersPerVolt=976;//constant set by rangefinder
 	double correctionCoeff = 1.05;
+	//TODO change correction coefficient in case we go to nationals
 	int defaultSampleBuffer=20;
 
 	public HRLV_MaxSonar_EZ_Analog(int AIO_port, int sampleBuffer) {
@@ -40,17 +41,17 @@ public class HRLV_MaxSonar_EZ_Analog{
 		return input.getAverageVoltage() * millimetersPerVolt * correctionCoeff;
 	}
 
-	double getInches() {
+	public double getInches() {
 		return getMillimeters() * .03937;
 	}
 
-	double getCentimeters() {
+	public double getCentimeters() {
 		return getMillimeters() * 10;
 	}
-	double getVoltage(){
+	public double getVoltage(){
 		return input.getAverageVoltage();
 	}
-	int getValue(){
+	public int getValue(){
 		return input.getAverageValue();
 	}
 

@@ -11,12 +11,12 @@ import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
 import org.usfirst.frc.team4585.robot.harve.view.*;
 
 public class HarvController {
-	HarvDrive drive;
+	DefaultDrive drive;
 	HarvInput input;
 	HarvAutoController autonomous;
 	SmartDashboard dashboard;
 	Sensors sensors;
-	HRLV_MaxSonar_EZ_Analog sonarSensor;
+	HRLV_MaxSonar_EZ_Analog sonar;
 	
 	private double magX, magY, magRot;
 	private double rotLimit;
@@ -32,11 +32,12 @@ public class HarvController {
 		autonomous = new HarvAutoController();
 		dashboard = new SmartDashboard();
 		sensors = new Sensors();
-		sonarSensor = new HRLV_MaxSonar_EZ_Analog(0, 20480);
+		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
 		time = 0;
 	}
 
 	private void showInformation() {
+		dashboard.putNumber("Rangefinder", sonar.getInches());
 		
 	}
 
@@ -55,9 +56,12 @@ public class HarvController {
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
 			input.update();
 			
+			showInformation();
+			
 			magX = input.getInput(Axis.X);
 			magY = input.getAxis(Axis.Y);
 			magRot = input.getAxis(Axis.Z);
+			
 			
 			drive.update(magY, magRot);
 
