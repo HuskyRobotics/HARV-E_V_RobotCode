@@ -16,17 +16,22 @@ public class HarvController {
 	private SmartDashboard dashboard;
 	private Sensors sensors;
 	
-	private final double millisBetweenIterations=20;
+	private final double millisPerIteration;
 	private double magX, magY, magRot;
 	private double time;
 	//rotation variables
 
-	public HarvController() {
+	public HarvController() { //default constructor
 		input = new HarvInput(0);
 		autonomous = new HarvAutoController();
+		drive = new DefaultDrive(0,1);
 		dashboard = new SmartDashboard();
 		sensors = new Sensors();
 		time = 0;
+		millisPerIteration = 20;
+		magX = 0;
+		magY = 0;
+		magRot = 0;
 	}
 
 //	private void augmentedDriveControlV2(){
@@ -53,6 +58,9 @@ public class HarvController {
 //	}
 
 	private void showInformation() {
+		dashboard.putNumber("magRot value", magRot);
+		dashboard.putNumber("magY value", magY);
+		dashboard.putNumber("magX value", magX);
 	}
 
 	public void robotInit() {
@@ -62,20 +70,24 @@ public class HarvController {
 	}
 
 	public void autonomous() {
-		autonomous.start();
+		if(System.currentTimeMillis() >= time + millisPerIteration){
+			 
+			time = System.currentTimeMillis();
+		}
 	}
 
 	public void operatorControl() {
 		
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
 			input.update();
-			//this.augmentedDriveControlV2();
-			magY = this.input.getJoystickInput(Axis.Y);
-			magRot = this.input.getJoystickInput(Axis.Z);
-			sensors.updateBIAcceleration();
+			magX = input.getJoystickInput(Axis.X);
+			magY = input.getJoystickInput(Axis.Y);
+			magRot = input.getJoystickInput(Axis.Z);
+			drive.update(magX, magY, magRot);
+			
+			
 			this.showInformation();
 			time = System.currentTimeMillis();
-			drive.update(magY, magRot);
 		}
 	}
 	
