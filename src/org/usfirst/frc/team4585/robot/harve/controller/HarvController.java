@@ -5,6 +5,7 @@ import org.usfirst.frc.team4585.robot.harve.model.*;
 import org.usfirst.frc.team4585.robot.harve.model.drive.DefaultDrive;
 import org.usfirst.frc.team4585.robot.harve.model.drive.HarvDrive;
 import org.usfirst.frc.team4585.robot.harve.model.drive.MecanumDrive;
+import org.usfirst.frc.team4585.robot.harve.model.sensors.Sensors;
 import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
 import org.usfirst.frc.team4585.robot.harve.view.*;
 

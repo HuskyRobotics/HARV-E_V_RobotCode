@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4585.robot.harve.model;
+package org.usfirst.frc.team4585.robot.harve.model.sensors;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.ADXL345_SPI;
