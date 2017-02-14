@@ -22,7 +22,7 @@ public class HarvController {
 	//rotation variables
 
 	public HarvController() { //default constructor
-		input = new HarvInput(0);
+		input = new FlightStick(0);
 		autonomous = new HarvAutoController();
 		drive = new DefaultDrive(0,1);
 		dashboard = new SmartDashboard();
@@ -80,9 +80,9 @@ public class HarvController {
 		
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
 			input.update();
-			magX = input.getJoystickInput(Axis.X);
-			magY = input.getJoystickInput(Axis.Y);
-			magRot = input.getJoystickInput(Axis.Z);
+			magX = input.getInput(Axis.X);
+			magY = input.getInput(Axis.Y);
+			magRot = input.getInput(Axis.Z);
 			drive.update(magX, magY, magRot);
 			
 			
