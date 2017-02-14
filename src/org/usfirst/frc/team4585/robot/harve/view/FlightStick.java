@@ -2,7 +2,7 @@ package org.usfirst.frc.team4585.robot.harve.view;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class FlightStick {
+public class FlightStick extends HarvInput{
 	private double coeffX;
 	private double coeffY;
 	private double coeffZ;
@@ -38,6 +38,8 @@ public class FlightStick {
 	Joystick joyStick;
 	
 	public FlightStick(){//default constructor
+		super.isXboxControler = false;
+		super.isRound = true;
 		isSquare = false;
 		this.coeffX = 1.0;
 		this.coeffY = 1.0;
@@ -103,9 +105,9 @@ public class FlightStick {
 		}
 	}
 	
-	public double getInput(Axis axsis){
+	public double getInput(Axis axis){
 		double magnitude = 0;
-		switch(axsis){
+		switch(axis){
 		case X:magnitude = magX;
 		break;
 		case Y:magnitude = magY;
@@ -228,5 +230,20 @@ public class FlightStick {
 	
 	public void setIsRound(boolean isRound){
 		this.isSquare = !isRound;
+	}
+
+	@Override
+	public double getAxis(Axis axis) {
+		return this.getInput(axis);
+	}
+
+	@Override
+	public boolean buttonIsPressed(int button) {
+		return joyStick.getRawButton(button);
+	}
+
+	@Override
+	public void update() {
+		this.updateFlightStick();
 	}
 }
