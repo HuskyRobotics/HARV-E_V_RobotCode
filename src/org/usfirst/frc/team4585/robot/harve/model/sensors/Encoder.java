@@ -55,7 +55,6 @@ public class Encoder {//this is a class that is used along with cimcoders
 	}
 	
 	private void updateAnalogInput(){
-		
 	}
 	
 	private void updateDigitalInput(){
