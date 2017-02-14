@@ -6,9 +6,10 @@ public class HRLV_MaxSonar_EZ_Analog{
 	private AnalogInput input;
 	int sampleBuffer;
 	int millimetersPerVolt=976;//constant set by rangefinder
+	double correctionCoeff = 1.05;
 	int defaultSampleBuffer=20;
 
-	void HRLV_MaxSonar_EZ_Analog(int AIO_port, int sampleBuffer) {
+	HRLV_MaxSonar_EZ_Analog(int AIO_port, int sampleBuffer) {
 		input = new AnalogInput(AIO_port);
 		this.sampleBuffer = sampleBuffer;
 
@@ -17,7 +18,7 @@ public class HRLV_MaxSonar_EZ_Analog{
 
 	}
 
-	void HRLV_MaxSonar_EZ_Analog(int AIO_port) {
+	HRLV_MaxSonar_EZ_Analog(int AIO_port) {
 		input = new AnalogInput(AIO_port);
 		this.sampleBuffer = defaultSampleBuffer;
 
@@ -26,7 +27,7 @@ public class HRLV_MaxSonar_EZ_Analog{
 
 	}
 
-	// default=1, higher numbers are more accurate but have a slower polling
+	// default=20, higher numbers are more accurate but have a slower polling
 	// speed
 	void setSampleBuffer(int buffer) {
 		this.sampleBuffer = buffer;
@@ -35,8 +36,8 @@ public class HRLV_MaxSonar_EZ_Analog{
 	}
 	
 
-	int getMillimeters() {
-		return (int) input.getAverageVoltage() * millimetersPerVolt;
+	double getMillimeters() {
+		return input.getAverageVoltage() * millimetersPerVolt * correctionCoeff;
 	}
 
 	double getInches() {
