@@ -19,6 +19,7 @@ public class HarvController {
 	Sensors sensors;
 	HRLV_MaxSonar_EZ_Analog sonar;
 	Encoder encoder;
+	Shooter shooter;
 	
 	private double magX, magY, magRot;
 	private double rotLimit;
@@ -36,6 +37,7 @@ public class HarvController {
 		sensors = new Sensors();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
 		encoder = new Encoder();
+		shooter = new Shooter(3);//port three is open
 		time = 0;
 	}
 	
