@@ -48,9 +48,9 @@ public class HarvController {
 		}
 		if(!(input.getAxis(Axis.Z) > 0 || input.getAxis(Axis.Z) < 0)){
 			if(sensors.getAngle() > 1){
-				magRot = -(sensors.getAngle() + 0.11) * 0.014;
+				magRot = -(sensors.getAngle() + 0.11) * 0.011;
 			}else if(sensors.getAngle() < 1){
-				magRot = -(sensors.getAngle()+0.11 )* 0.014;
+				magRot = -(sensors.getAngle()+0.11 )* 0.011;
 			}
 		}
 	}
