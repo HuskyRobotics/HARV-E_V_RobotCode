@@ -5,6 +5,7 @@ import org.usfirst.frc.team4585.robot.harve.model.*;
 import org.usfirst.frc.team4585.robot.harve.model.drive.DefaultDrive;
 import org.usfirst.frc.team4585.robot.harve.model.drive.HarvDrive;
 import org.usfirst.frc.team4585.robot.harve.model.drive.MecanumDrive;
+import org.usfirst.frc.team4585.robot.harve.model.sensors.Encoder;
 import org.usfirst.frc.team4585.robot.harve.model.sensors.HRLV_MaxSonar_EZ_Analog;
 import org.usfirst.frc.team4585.robot.harve.model.sensors.Sensors;
 import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
@@ -17,6 +18,7 @@ public class HarvController {
 	SmartDashboard dashboard;
 	Sensors sensors;
 	HRLV_MaxSonar_EZ_Analog sonar;
+	Encoder encoder;
 	
 	private double magX, magY, magRot;
 	private double rotLimit;
@@ -33,12 +35,26 @@ public class HarvController {
 		dashboard = new SmartDashboard();
 		sensors = new Sensors();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
+		encoder = new Encoder();
 		time = 0;
+	}
+	
+	private void augmentedDriveControll(){
+		magX = input.getInput(Axis.X);
+		magY = input.getAxis(Axis.Y);
+		magRot = input.getAxis(Axis.Z);
+		sensors.reset();
+		if(!(input.getAxis(Axis.Z) > 0 || input.getAxis(Axis.Z) < 0)){
+			if(sensors.getAngle() > 4){
+				magRot = sensors.getAngle() * 0.007;
+			}else if(sensors.getAngle() < -4){
+				magRot = sensors.getAngle() * 0.007;
+			}
+		}
 	}
 
 	private void showInformation() {
 		dashboard.putNumber("Rangefinder", sonar.getInches());
-		
 	}
 
 	public void robotInit() {
@@ -56,13 +72,9 @@ public class HarvController {
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
 			input.update();
 			
+			augmentedDriveControll();
+			
 			showInformation();
-			
-			magX = input.getInput(Axis.X);
-			magY = input.getAxis(Axis.Y);
-			magRot = input.getAxis(Axis.Z);
-			
-			
 			drive.update(magY, magRot);
 
 			time = System.currentTimeMillis();
