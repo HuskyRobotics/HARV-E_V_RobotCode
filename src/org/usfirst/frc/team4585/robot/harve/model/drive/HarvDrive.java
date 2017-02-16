@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4585.robot.harve.model.drive;
 
+import edu.wpi.first.wpilibj.Encoder;
+
 public abstract class HarvDrive {
 	private double magX;
 	private double magY;

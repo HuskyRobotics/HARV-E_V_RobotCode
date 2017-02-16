@@ -5,7 +5,6 @@ import org.usfirst.frc.team4585.robot.harve.model.*;
 import org.usfirst.frc.team4585.robot.harve.model.drive.DefaultDrive;
 import org.usfirst.frc.team4585.robot.harve.model.drive.HarvDrive;
 import org.usfirst.frc.team4585.robot.harve.model.drive.MecanumDrive;
-import org.usfirst.frc.team4585.robot.harve.model.sensors.Encoder;
 import org.usfirst.frc.team4585.robot.harve.model.sensors.HRLV_MaxSonar_EZ_Analog;
 import org.usfirst.frc.team4585.robot.harve.model.sensors.Sensors;
 import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
@@ -18,7 +17,6 @@ public class HarvController {
 	SmartDashboard dashboard;
 	Sensors sensors;
 	HRLV_MaxSonar_EZ_Analog sonar;
-	Encoder encoder;
 	Shooter shooter;
 	
 	private double magX, magY, magRot;
@@ -36,7 +34,6 @@ public class HarvController {
 		dashboard = new SmartDashboard();
 		sensors = new Sensors();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
-		encoder = new Encoder();
 		shooter = new Shooter(3);//port three is open
 		time = 0;
 	}
