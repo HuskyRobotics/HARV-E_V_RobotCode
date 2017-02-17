@@ -12,17 +12,20 @@ import org.usfirst.frc.team4585.robot.harve.view.*;
 
 public class HarvController {
 	HarvDrive drive;
-	HarvInput input;
+	FlightStick input;
 	HarvAutoController autonomous;
 	SmartDashboard dashboard;
 	Sensors sensors;
 	HRLV_MaxSonar_EZ_Analog sonar;
 	Shooter shooter;
+	Climber climber;
 	
 	private double magX, magY, magRot;
 	private double rotLimit;
 	private double time;
 	private double millisPerIteration;
+	
+	private boolean isFastClimber;
 	//rotation variables
 	
 	
@@ -35,11 +38,35 @@ public class HarvController {
 		sensors = new Sensors();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
 		shooter = new Shooter(3);//port three is open
+		climber = new Climber(2);
 		time = 0;
 	}
 	
 	private void showInformation() {
 		dashboard.putNumber("Rangefinder", sonar.getInches());
+	}
+	
+	private void updateClimber(){
+		boolean changeIsFastClimber = false;
+		
+		if(input.buttonIsPressed(2)){
+			if(isFastClimber){
+				changeIsFastClimber = false;
+			}else{
+				changeIsFastClimber = true;
+			}
+		}else{
+			isFastClimber = changeIsFastClimber;
+		}
+		
+		if(input.getPOVHat(0)){
+			if(isFastClimber){
+				Climber.setSpeed(1);
+			}else{
+				Climber.setSpeed(0.5);
+			}
+			Climber.setClimb(true);
+		}
 	}
 
 	public void robotInit() {
@@ -56,7 +83,11 @@ public class HarvController {
 		
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
 			input.update();
-						
+			magY = input.getAxis(Axis.Y);
+			magRot = input.getAxis(Axis.Z);
+			
+			updateClimber();
+			
 			showInformation();
 			drive.update(magY, magRot);
 

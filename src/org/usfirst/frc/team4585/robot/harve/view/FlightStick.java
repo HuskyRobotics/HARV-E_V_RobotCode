@@ -241,6 +241,10 @@ public class FlightStick extends HarvInput{
 	public boolean buttonIsPressed(int button) {
 		return joyStick.getRawButton(button);
 	}
+	
+	public boolean getPOVHat(int angle){
+		return joyStick.getPOV(angle) == 1;
+	}
 
 	@Override
 	public void update() {
