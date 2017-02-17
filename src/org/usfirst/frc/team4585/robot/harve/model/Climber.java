@@ -9,7 +9,7 @@ public class Climber {
 	Spark motor;
 	boolean climb=false;
 
-	Climber(int port) {
+	public Climber(int port) {
 		motor = new Spark(port);
 	}
 

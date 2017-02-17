@@ -61,11 +61,11 @@ public class HarvController {
 		
 		if(input.getPOVHat(0)){
 			if(isFastClimber){
-				Climber.setSpeed(1);
+				climber.setSpeed(1);
 			}else{
-				Climber.setSpeed(0.5);
+				climber.setSpeed(0.5);
 			}
-			Climber.setClimb(true);
+			climber.setClimb(true);
 		}
 	}
 
