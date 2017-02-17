@@ -3,21 +3,33 @@ package org.usfirst.frc.team4585.robot.harve.model;
 import edu.wpi.first.wpilibj.Spark;
 
 public class Climber {
-	
-	double speed=0;
-	int speedCoeff=1; //this is here to reverse the motor if needed
+
+	double speed = 0;
+	int speedCoeff = 1; // this is here to reverse the motor if needed
 	Spark motor;
-	
-	Climber(int port){
-		motor=new Spark(port);	
+	boolean climb=false;
+
+	Climber(int port) {
+		motor = new Spark(port);
 	}
-	
-	void setClimb(boolean climb){
-		if(climb)
-			motor.set(speed*speedCoeff);
+
+	void setClimb(boolean climb) {
+		this.climb=climb;
+		if (climb)
+			motor.set(speed * speedCoeff);
+		else
+			motor.set(0);
 	}
-	void setSpeed(double speed){
-		this.speed=speed;
+
+	void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	void update() {
+		if (climb)
+			motor.set(speed * speedCoeff);
+		else
+			motor.set(0);
 	}
 
 }
