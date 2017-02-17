@@ -13,7 +13,7 @@ public class Climber {
 		motor = new Spark(port);
 	}
 
-	void setClimb(boolean climb) {
+	public void setClimb(boolean climb) {
 		this.climb=climb;
 		if (climb)
 			motor.set(speed * speedCoeff);
@@ -21,11 +21,11 @@ public class Climber {
 			motor.set(0);
 	}
 
-	void setSpeed(double speed) {
+	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
 
-	void update() {
+	public void update() {
 		if (climb)
 			motor.set(speed * speedCoeff);
 		else
