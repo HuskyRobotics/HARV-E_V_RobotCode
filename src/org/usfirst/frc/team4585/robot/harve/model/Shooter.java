@@ -3,6 +3,7 @@ package org.usfirst.frc.team4585.robot.harve.model;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Encoder;
 public class Shooter {
+	private boolean shootByDistance;
 	private final double maxWheelSpeed = 1;
 	private double wheelSpeed;//in rotations per second
 	private double wheelMagnitude; //starts at 0 and goes to 1
@@ -64,7 +65,13 @@ public class Shooter {
 	}
 	
 	public void setWheelSpeed(double wheelSpeed){
+		shootByDistance = false;
 		this.wheelSpeed = wheelSpeed;
+	}
+	
+	public void setDistance(double distance){
+		shootByDistance = true;
+		this.distance = distance;
 	}
 	
 	public double getWheelSpeed(){

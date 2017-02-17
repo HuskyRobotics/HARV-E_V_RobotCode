@@ -11,7 +11,7 @@ import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
 import org.usfirst.frc.team4585.robot.harve.view.*;
 
 public class HarvController {
-	DefaultDrive drive;
+	HarvDrive drive;
 	HarvInput input;
 	HarvAutoController autonomous;
 	SmartDashboard dashboard;
@@ -38,22 +38,6 @@ public class HarvController {
 		time = 0;
 	}
 	
-	private void augmentedDriveControll(){
-		magX = input.getInput(Axis.X);
-		magY = input.getAxis(Axis.Y);
-		magRot = input.getAxis(Axis.Z);
-		if(input.getAxis(Axis.Z) > 0 || input.getAxis(Axis.Z) < 0){
-			sensors.reset();
-		}
-		if(!(input.getAxis(Axis.Z) > 0 || input.getAxis(Axis.Z) < 0)){
-			if(sensors.getAngle() > 1){
-				magRot = -(sensors.getAngle() + 0.11) * 0.011;
-			}else if(sensors.getAngle() < 1){
-				magRot = -(sensors.getAngle()+0.11 )* 0.011;
-			}
-		}
-	}
-
 	private void showInformation() {
 		dashboard.putNumber("Rangefinder", sonar.getInches());
 	}
@@ -72,9 +56,7 @@ public class HarvController {
 		
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
 			input.update();
-			
-			augmentedDriveControll();
-			
+						
 			showInformation();
 			drive.update(magY, magRot);
 
