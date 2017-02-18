@@ -26,6 +26,8 @@ public class HarvController {
 	private double millisPerIteration;
 	
 	private boolean isFastClimber;
+	boolean changeIsFastClimber;
+
 	//rotation variables
 	
 	
@@ -47,25 +49,31 @@ public class HarvController {
 	}
 	
 	private void updateClimber(){
-		boolean changeIsFastClimber = false;
 		
 		if(input.buttonIsPressed(2)){
+			SmartDashboard.putString("Buttons pressed", "yes");
 			if(isFastClimber){
 				changeIsFastClimber = false;
 			}else{
 				changeIsFastClimber = true;
 			}
 		}else{
+			SmartDashboard.putString("Buttons pressed", "no");
 			isFastClimber = changeIsFastClimber;
 		}
 		
-		if(input.getPOVHat(0)){
+		SmartDashboard.putBoolean("isChangingFast", changeIsFastClimber);
+		SmartDashboard.putBoolean("isFast", isFastClimber);
+		
+		if(input.buttonIsPressed(5)){
 			if(isFastClimber){
 				climber.setSpeed(1);
 			}else{
-				climber.setSpeed(0.5);
+				climber.setSpeed(0.25);
 			}
 			climber.setClimb(true);
+		}else{
+			climber.setClimb(false);
 		}
 	}
 
@@ -89,7 +97,7 @@ public class HarvController {
 			updateClimber();
 			
 			showInformation();
-			drive.update(magY, magRot);
+			drive.update(-magY, magRot);
 
 			time = System.currentTimeMillis();
 		}
