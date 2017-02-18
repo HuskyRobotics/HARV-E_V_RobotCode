@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4585.robot.harve.controller;
 
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import org.usfirst.frc.team4585.robot.harve.model.*;
 import org.usfirst.frc.team4585.robot.harve.model.drive.DefaultDrive;
@@ -19,6 +20,7 @@ public class HarvController {
 	HRLV_MaxSonar_EZ_Analog sonar;
 	Shooter shooter;
 	Climber climber;
+	Talon spinner;
 	
 	private double magX, magY, magRot;
 	private double rotLimit;
@@ -41,6 +43,7 @@ public class HarvController {
 		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
 		shooter = new Shooter(3);//port three is open
 		climber = new Climber(2);
+		spinner = new Talon(4);
 		time = 0;
 	}
 	
@@ -76,6 +79,15 @@ public class HarvController {
 			climber.setClimb(false);
 		}
 	}
+	
+	private void updateShooter(){
+		if(input.buttonIsPressed(6)){
+			shooter.setWheelMagnitude(1);
+			spinner.set(0.12);
+		}else{
+			shooter.setWheelMagnitude(0);
+		}
+	}
 
 	public void robotInit() {
 		time = System.currentTimeMillis();
@@ -95,6 +107,7 @@ public class HarvController {
 			magRot = input.getAxis(Axis.Z);
 			
 			updateClimber();
+			updateShooter();
 			
 			showInformation();
 			drive.update(-magY, magRot);

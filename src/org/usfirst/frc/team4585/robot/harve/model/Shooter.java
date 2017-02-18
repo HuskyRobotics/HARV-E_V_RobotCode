@@ -3,6 +3,7 @@ package org.usfirst.frc.team4585.robot.harve.model;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Encoder;
 public class Shooter {
+	private boolean isEncoderShoot;
 	private boolean shootByDistance;
 	private final double maxWheelSpeed = 1;
 	private double wheelSpeed;//in rotations per second
@@ -15,6 +16,7 @@ public class Shooter {
 	private Encoder wheelEncoder;
 	
 	public Shooter(){//default constructor
+		isEncoderShoot =false;
 		tolerance = 0.1;
 		wheelSpeed = 0;
 		distance = 0;
@@ -39,20 +41,32 @@ public class Shooter {
 		wheelEncoder = new Encoder(encoderPortA,encoderPortB);
 	}
 	
+	private void encoderShoot(){
+		//find the amount of power to apply to the motor to get the required wheel speed
+		if(wheelSpeed < wheelEncoder.getRate()){
+			if(wheelMagnitude < 1)
+				wheelMagnitude += (wheelSpeed - wheelEncoder.getRate()) * (1/20);
+			}else if(wheelSpeed > wheelEncoder.getRate()){
+				wheelMagnitude -= (wheelSpeed - wheelEncoder.getRate()) * (1/20);
+			}
+		this.shoot(wheelMagnitude);
+	}
+	
+	private void shoot(double speed){
+		wheel.set(speed);
+	}
 	
 	private double calculateDistance(){
 		distance = wheelEncoder.getRate() * 1/*distance thing */;
 		return distance;
 	}
 	
-	private void updateWheelSpeed(){//find the amount of power to apply to the motor to get the required wheel speed
-		if(wheelSpeed < wheelEncoder.getRate()){
-			if(wheelMagnitude < 1)
-				wheelMagnitude += (wheelSpeed - wheelEncoder.getRate()) * (1/20);
-		}else if(wheelSpeed > wheelEncoder.getRate()){
-			wheelMagnitude -= (wheelSpeed - wheelEncoder.getRate()) * (1/20);
+	private void updateWheelSpeed(){
+		if(isEncoderShoot){
+			encoderShoot();
+		}else{
+			shoot(wheelMagnitude);
 		}
-		wheel.set(wheelMagnitude);
 	}
 	
 	public void update(){
@@ -80,6 +94,14 @@ public class Shooter {
 	
 	public double getDistance(){
 		return this.distance;
+	}
+	
+	public boolean getIsEncoderShoot(){
+		return this.isEncoderShoot;
+	}
+	
+	public void setIsEncoderShoot(boolean isEncoderShoot){
+		this.isEncoderShoot = isEncoderShoot;
 	}
 	
 }
