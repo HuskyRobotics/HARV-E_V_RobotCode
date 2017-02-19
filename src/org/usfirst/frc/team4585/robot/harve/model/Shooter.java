@@ -71,7 +71,6 @@ public class Shooter {
 	
 	public void update(){
 		this.updateWheelSpeed();
-		this.calculateDistance();
 	}
 	
 	public void setWheelMagnitude(double wheelMagnitude){

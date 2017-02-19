@@ -29,11 +29,15 @@ public class HarvController {
 	
 	private boolean isFastClimber;
 	boolean changeIsFastClimber;
+	
+	private boolean isShooting;
+	private boolean changeShooting;
 
 	//rotation variables
 	
 	
 	public HarvController() {
+		isShooting = false;
 		millisPerIteration = 20;
 		drive = new DefaultDrive(0, 1);
 		input = new FlightStick(0);
@@ -81,12 +85,29 @@ public class HarvController {
 	}
 	
 	private void updateShooter(){
+		
 		if(input.buttonIsPressed(6)){
+			SmartDashboard.putString("shoot Buttons pressed", "yes");
+			if(isShooting){
+				changeShooting = false;
+			}else{
+				changeShooting = true;
+			}
+		}else{
+			SmartDashboard.putString("shoot Buttons pressed", "no");
+			isShooting = changeShooting;
+		}
+		
+		SmartDashboard.putBoolean("isShooting", isShooting);
+		
+		if(isShooting){
 			shooter.setWheelMagnitude(1);
-			spinner.set(0.12);
 		}else{
 			shooter.setWheelMagnitude(0);
 		}
+		
+		SmartDashboard.putNumber("shooter speed", shooter.getWheelSpeed());
+		shooter.update();
 	}
 
 	public void robotInit() {
