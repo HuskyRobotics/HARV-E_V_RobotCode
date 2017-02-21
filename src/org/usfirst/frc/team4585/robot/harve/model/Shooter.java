@@ -7,8 +7,10 @@ public class Shooter {
 	private boolean shootByDistance;
 	private final double maxWheelSpeed = 1;
 	private double wheelSpeed;//in rotations per second
+	private final double wheelSpeedCoeff; //what to multiply against wheel speed to get the speed of the ball
 	private double wheelMagnitude; //starts at 0 and goes to 1
 	private double tolerance;//how many rotations per second the wheel can be off by
+	private double launchDistance;
 	private double distance;
 	private int wheelPort, encoderPort;
 	
@@ -16,6 +18,7 @@ public class Shooter {
 	private Encoder wheelEncoder;
 	
 	public Shooter(){//default constructor
+		wheelSpeedCoeff = 1;
 		isEncoderShoot =false;
 		tolerance = 0.1;
 		wheelSpeed = 0;
@@ -39,6 +42,17 @@ public class Shooter {
 		this();
 		wheel = new Spark(wheelPort);
 		wheelEncoder = new Encoder(encoderPortA,encoderPortB);
+	}
+	
+	private void findLaunchDistance(){//finds distance from ball at project ft/s at 70degrees
+		double ballSpeed = wheelSpeed * wheelSpeedCoeff;
+		double magY = Math.sin(70)*ballSpeed;
+		double magX = Math.cos(70)*ballSpeed;
+		//find time it will take for ball to go up and down
+		double timeInAir = -magY/-9.8;
+		timeInAir += magY/-9.8;
+		
+		this.launchDistance = magX * timeInAir * 0.9;
 	}
 	
 	private void encoderShoot(){
