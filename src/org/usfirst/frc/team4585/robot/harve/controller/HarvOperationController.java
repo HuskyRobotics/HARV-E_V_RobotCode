@@ -11,21 +11,35 @@ import org.usfirst.frc.team4585.robot.harve.model.sensors.Sensors;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class HarvOperationController {
-	HarvDrive drive;
-	HarvInput input;
-	SmartDashboard dashboard;
-	Sensors sensors;
-	HRLV_MaxSonar_EZ_Analog sonar;
-	Shooter shooter;
+	private HarvDrive drive;
+	private HarvInput driveInput;
+	private HarvInput weaponsInput;
+	private SmartDashboard dashboard;
+	private Sensors sensors;
+	private HRLV_MaxSonar_EZ_Analog sonar;
+	private Shooter shooter;
+	private Loader loader;
 	
 	private double magX, magY, magRot;
 	private double rotLimit;
 	private double time;
 	private double millisPerIteration;
 	
+	private int weaponsTriger, weaponsToggle, weaponsAutoAlign, weaponsClimberToggle, weaponsClimberSpeedToggle;//undefiend buttons incase of useing a different controller.
+	private int driveXAxis, driveYAxis, driveZAxis;
+	
+	private boolean isFastClimber;
+	private boolean changeIsFastClimber;
+	
+	private boolean isShooting;
+	private boolean changeIsShooting;
+	
+	private boolean isAligned;
+	
 	public void HarvOperationController(){
 		drive = new DefaultDrive(0,1);
-		input = new FlightStick(0);
+		driveInput = new FlightStick(0);
+		weaponsInput = new FlightStick(1);
 		dashboard = new SmartDashboard();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0);
 		shooter = new Shooter(2);
@@ -39,7 +53,7 @@ public class HarvOperationController {
 	}
 	
 	public void start(){
-		input.update();
+		driveInput.update();
 		driveControll();
 		weaponsControll();
 	}
@@ -49,19 +63,45 @@ public class HarvOperationController {
 	}
 	
 	private void weaponsControll(){
-		if(input.buttonIsPressed(1)){
+		
+	}
+	
+	private void updateShooter(){
+		if(weaponsInput.buttonIsPressed(this.weaponsToggle)){//toggles the wheel
+			if(isShooting)
+				changeIsShooting = false;
+			else
+				changeIsShooting = true;
+		}
+		else
+			isShooting = changeIsShooting;
+		
+
+		if(weaponsInput.buttonIsPressed(this.weaponsTriger)){
 			
 		}
 	}
 	
+	private void updateClimber(){
+		if(weaponsInput.buttonIsPressed(this.weaponsClimberSpeedToggle)){//toggles the speed of the climber
+			if(this.isFastClimber){
+				this.changeIsFastClimber = false;
+			}else 
+				this.changeIsFastClimber = true;
+		}else{
+			isFastClimber = changeIsFastClimber;
+		}
+		
+	}
+	
 	private void augmentedDriveControll(){
-		magX = input.getInput(Axis.X);
-		magY = input.getAxis(Axis.Y);
-		magRot = input.getAxis(Axis.Z);
-		if(input.getAxis(Axis.Z) > 0 || input.getAxis(Axis.Z) < 0){
+		magX = driveInput.getInput(Axis.X);
+		magY = driveInput.getAxis(Axis.Y);
+		magRot = driveInput.getAxis(Axis.Z);
+		if(driveInput.getAxis(Axis.Z) > 0 || driveInput.getAxis(Axis.Z) < 0){
 			sensors.reset();
 		}
-		if(!(input.getAxis(Axis.Z) > 0 || input.getAxis(Axis.Z) < 0)){
+		if(!(driveInput.getAxis(Axis.Z) > 0 || driveInput.getAxis(Axis.Z) < 0)){
 			if(sensors.getAngle() > 1){
 				magRot = -(sensors.getAngle() + 0.11) * 0.011;
 			}else if(sensors.getAngle() < 1){

@@ -70,7 +70,7 @@ public class Shooter {
 	}
 	
 	public void update(){
-		this.updateWheelSpeed();
+		this.updateWheelSpeed();//blalbalba
 	}
 	
 	public void setWheelMagnitude(double wheelMagnitude){
