@@ -17,6 +17,7 @@ public class HarvOperationController {
 	private SmartDashboard dashboard;
 	private Sensors sensors;
 	private HRLV_MaxSonar_EZ_Analog sonar;
+	private Climber climber;
 	private Shooter shooter;
 	private Loader loader;
 	
@@ -34,6 +35,8 @@ public class HarvOperationController {
 	private boolean isShooting;
 	private boolean changeIsShooting;
 	
+	private boolean align;
+	private boolean setAlign;
 	private boolean isAligned;
 	
 	public void HarvOperationController(){
@@ -42,7 +45,9 @@ public class HarvOperationController {
 		weaponsInput = new FlightStick(1);
 		dashboard = new SmartDashboard();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0);
-		shooter = new Shooter(2);
+		climber = new Climber(2);
+		shooter = new Shooter(3);
+		loader = new Loader(4);
 		
 		magX = 0;
 		magY = 0;
@@ -63,7 +68,7 @@ public class HarvOperationController {
 	}
 	
 	private void weaponsControll(){
-		
+		updateClimber();
 	}
 	
 	private void updateShooter(){
@@ -75,14 +80,13 @@ public class HarvOperationController {
 		}
 		else
 			isShooting = changeIsShooting;
-		
-
 		if(weaponsInput.buttonIsPressed(this.weaponsTriger)){
 			
 		}
 	}
 	
 	private void updateClimber(){
+		
 		if(weaponsInput.buttonIsPressed(this.weaponsClimberSpeedToggle)){//toggles the speed of the climber
 			if(this.isFastClimber){
 				this.changeIsFastClimber = false;
@@ -92,6 +96,28 @@ public class HarvOperationController {
 			isFastClimber = changeIsFastClimber;
 		}
 		
+		if(isFastClimber)
+			this.climber.setSpeed(1);
+		else
+			this.climber.setSpeed(0.5);
+		
+		if(weaponsInput.buttonIsPressed(this.weaponsClimberToggle))
+			this.climber.setClimb(true);
+		else
+			this.climber.setClimb(false);
+	}
+	
+	private void autoAlign(){
+		if(this.weaponsInput.buttonIsPressed(this.weaponsAutoAlign)){
+			if(align){
+				setAlign = false;
+			}else
+				setAlign = true;
+		}
+		if(align){
+			
+		}
+		isAligned = true;
 	}
 	
 	private void augmentedDriveControll(){
