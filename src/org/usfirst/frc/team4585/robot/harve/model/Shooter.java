@@ -11,6 +11,7 @@ public class Shooter {
 	private double wheelMagnitude; //starts at 0 and goes to 1
 	private double tolerance;//how many rotations per second the wheel can be off by
 	private double launchDistance;
+	private double launchCoeff;
 	private double distance;
 	private int wheelPort, encoderPort;
 	
@@ -52,7 +53,7 @@ public class Shooter {
 		double timeInAir = -magY/-9.8;
 		timeInAir += magY/-9.8;
 		
-		this.launchDistance = magX * timeInAir * 0.9;
+		this.launchDistance = magX * timeInAir * launchCoeff;
 	}
 	
 	private void encoderShoot(){
