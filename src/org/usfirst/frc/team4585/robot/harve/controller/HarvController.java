@@ -11,16 +11,19 @@ import org.usfirst.frc.team4585.robot.harve.model.sensors.Sensors;
 import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
 import org.usfirst.frc.team4585.robot.harve.view.*;
 
+@SuppressWarnings({ "static-access", "static-access" })
 public class HarvController {
+	HarvOperationController operation;
 	HarvDrive drive;
-	FlightStick input;
+	HarvInput driveInput;
+	HarvInput weaponsInput;
 	HarvAutoController autonomous;
 	SmartDashboard dashboard;
 	Sensors sensors;
 	HRLV_MaxSonar_EZ_Analog sonar;
 	Shooter shooter;
 	Climber climber;
-	Talon spinner;
+	Loader loader;
 	
 	private double magX, magY, magRot;
 	private double rotLimit;
@@ -40,15 +43,16 @@ public class HarvController {
 		isShooting = false;
 		millisPerIteration = 20;
 		drive = new DefaultDrive(0, 1);
-		input = new FlightStick(0);
+		driveInput = new FlightStick(0);
 		autonomous = new HarvAutoController();
 		dashboard = new SmartDashboard();
 		sensors = new Sensors();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
-		shooter = new Shooter(3);//port three is open
+		shooter = new Shooter(3);
 		climber = new Climber(2);
-		spinner = new Talon(4);
+		loader = new Loader(4);
 		time = 0;
+		operation = new HarvOperationController(drive,shooter,loader,climber,driveInput,weaponsInput);
 	}
 	
 	private void showInformation() {
@@ -57,7 +61,7 @@ public class HarvController {
 	
 	private void updateClimber(){
 		
-		if(input.buttonIsPressed(2)){
+		if(driveInput.buttonIsPressed(2)){
 			SmartDashboard.putString("Buttons pressed", "yes");
 			if(isFastClimber){
 				changeIsFastClimber = false;
@@ -72,7 +76,7 @@ public class HarvController {
 		SmartDashboard.putBoolean("isChangingFast", changeIsFastClimber);
 		SmartDashboard.putBoolean("isFast", isFastClimber);
 		
-		if(input.buttonIsPressed(5)){
+		if(driveInput.buttonIsPressed(5)){
 			if(isFastClimber){
 				climber.setSpeed(.95);
 			}else{
@@ -86,7 +90,7 @@ public class HarvController {
 	
 	private void updateShooter(){
 		
-		if(input.buttonIsPressed(6)){
+		if(driveInput.buttonIsPressed(6)){
 			SmartDashboard.putString("shoot Buttons pressed", "yes");
 			if(isShooting){
 				changeShooting = false;
@@ -112,28 +116,35 @@ public class HarvController {
 
 	public void robotInit() {
 		time = System.currentTimeMillis();
-		input.makeRound(true);
+		driveInput.makeRound(true);
 		sensors.calibrateGyro();
+		
+		operation.setWeaponsClimberSpeedToggle(5);
+		operation.setWeaponsClimberToggle(3);
+		operation.setWeaponsToggle(2);
 	}
 
 	public void autonomous() {
 		autonomous.start();
+		showInformation();
 	}
 
 	public void operatorControl() {
 		
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
-			input.update();
-			magY = input.getAxis(Axis.Y);
-			magRot = input.getAxis(Axis.Z);
-			
-			updateClimber();
-			updateShooter();
-			
 			showInformation();
-			drive.update(-magY, magRot);
-
-			time = System.currentTimeMillis();
+//			input.update();
+//			magY = input.getAxis(Axis.Y);
+//			magRot = input.getAxis(Axis.Z);
+//			
+//			updateClimber();
+//			updateShooter();
+//			
+//			showInformation();
+//			drive.update(-magY, magRot);
+//
+//			time = System.currentTimeMillis();
+			operation.start();
 		}
 	}
 	

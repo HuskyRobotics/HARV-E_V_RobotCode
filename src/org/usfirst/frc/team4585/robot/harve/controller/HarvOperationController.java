@@ -28,7 +28,7 @@ public class HarvOperationController {
 	private double distanceToGoal;
 	private double xAimerIncorectness;
 	
-	private int weaponsTriger, weaponsToggle, weaponsAutoAlign, weaponsClimberToggle, weaponsClimberSpeedToggle;//undefiend buttons incase of useing a different controller.
+	private int weaponsLoaderToggle, weaponsShooterToggle, weaponsAutoAlign, weaponsClimberToggle, weaponsClimberSpeedToggle;//undefiend buttons incase of useing a different controller.
 	private int driveXAxis, driveYAxis, driveZAxis;
 	
 	private boolean isFastClimber;
@@ -42,22 +42,33 @@ public class HarvOperationController {
 	private boolean isAligned;
 	private boolean canSeeTarget;
 	
-	public void HarvOperationController(){
-		drive = new DefaultDrive(0,1);
-		driveInput = new FlightStick(0);
-		weaponsInput = new FlightStick(1);
-		dashboard = new SmartDashboard();
-		sonar = new HRLV_MaxSonar_EZ_Analog(0);
-		climber = new Climber(2);
-		shooter = new Shooter(3);
-		loader = new Loader(4);
-		
+	public HarvOperationController(){//default constructor
 		magX = 0;
 		magY = 0;
 		magRot = 0;
 		rotLimit = 0;
 		time = 0;
 		millisPerIteration = 0;
+		distanceToGoal = 0;
+		xAimerIncorectness = 0;
+		isFastClimber = false;
+		changeIsFastClimber = false;
+		isShooting = false;
+		changeIsShooting = false;
+		align = false;
+		setAlign = false;
+		isAligned = false;
+		canSeeTarget = false;
+	}
+	
+	public HarvOperationController(HarvDrive drive, Shooter shooter, Loader loader,Climber climber, HarvInput driveInput, HarvInput weaponsInput){
+		this();
+		this.drive = drive;
+		this.shooter = shooter;
+		this.loader = loader;
+		this.climber = climber;
+		this.driveInput = driveInput;
+		this.weaponsInput = weaponsInput;
 	}
 	
 	public void start(){
@@ -83,7 +94,7 @@ public class HarvOperationController {
 	}
 	
 	private void updateShooter(){
-		if(weaponsInput.buttonIsPressed(this.weaponsToggle)){//toggles the wheel
+		if(weaponsInput.buttonIsPressed(this.weaponsShooterToggle)){//toggles the wheel
 			if(isShooting)
 				changeIsShooting = false;
 			else
@@ -104,7 +115,7 @@ public class HarvOperationController {
 	
 	private void updateLoader(){
 		
-		if(weaponsInput.buttonIsPressed(this.weaponsTriger)){
+		if(weaponsInput.buttonIsPressed(this.weaponsLoaderToggle)){
 			loader.setIsLoading(true);
 		}else{
 			loader.setIsLoading(false);
@@ -306,19 +317,19 @@ public class HarvOperationController {
 	}
 
 	public int getWeaponsTriger() {
-		return weaponsTriger;
+		return weaponsLoaderToggle;
 	}
 
 	public void setWeaponsTriger(int weaponsTriger) {
-		this.weaponsTriger = weaponsTriger;
+		this.weaponsLoaderToggle = weaponsTriger;
 	}
 
 	public int getWeaponsToggle() {
-		return weaponsToggle;
+		return weaponsShooterToggle;
 	}
 
 	public void setWeaponsToggle(int weaponsToggle) {
-		this.weaponsToggle = weaponsToggle;
+		this.weaponsShooterToggle = weaponsToggle;
 	}
 
 	public int getWeaponsAutoAlign() {
