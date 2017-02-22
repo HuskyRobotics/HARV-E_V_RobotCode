@@ -83,9 +83,6 @@ public class HarvOperationController {
 		}
 		else
 			isShooting = changeIsShooting;
-		if(weaponsInput.buttonIsPressed(this.weaponsTriger)){
-			
-		}
 		
 		if(isShooting){
 			shooter.setDistance(distanceToGoal);
@@ -99,6 +96,11 @@ public class HarvOperationController {
 	
 	private void updateLoader(){
 		
+		if(weaponsInput.buttonIsPressed(this.weaponsTriger)){
+			loader.setIsLoading(true);
+		}else{
+			loader.setIsLoading(false);
+		}
 		
 		loader.update();
 	}

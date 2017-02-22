@@ -8,6 +8,7 @@ public class Loader {
 	private Encoder encoder;
 	
 	private boolean isStuck;
+	private boolean isLoading;
 	private boolean isSetBySpeed;
 	private boolean isSetByMagnitude;
 	private boolean isSetByBallsPerSecond;
@@ -43,7 +44,14 @@ public class Loader {
 	}
 	
 	public void update(){
-		
+		if(isSetBySpeed && (speed > 0 || speed < 0)){
+			if(encoder.get()/encoder.getSamplesToAverage()> speed){
+				this.magnitude -= ((encoder.getPeriod()/encoder.getSamplesToAverage()) - speed)/20;
+			}else{
+				this.magnitude += (speed - (encoder.getPeriod()/encoder.getSamplesToAverage()))/20;
+			}
+		}
+		spinner.set(magnitude);
 	}
 	
 	public void changeDirection(){
@@ -92,6 +100,10 @@ public class Loader {
 		if(this.findSpeed() > this.speed){
 			
 		}
+	}
+	
+	public void setIsLoading(boolean isLoading){
+		this.isLoading = isLoading;
 	}
 	
 }
