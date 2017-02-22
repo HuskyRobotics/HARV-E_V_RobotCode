@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import java.util.ArrayList;
-public class Sensors {
+public class Gyroscope {
 	ADXRS450_Gyro gyroscope;
 	ADXL345_SPI spiAccelerometer;
 	BuiltInAccelerometer BIAccelerometer;
@@ -17,7 +17,7 @@ public class Sensors {
 	double currentSpeedY;
 	double currentSpeedZ;
 	
-	public Sensors(){ //default constructor
+	public Gyroscope(){ //default constructor
 		gyroscope = new ADXRS450_Gyro();
 		spiAccelerometer = new ADXL345_SPI(Port.kMXP, Accelerometer.Range.k16G);
 		System.out.println(Accelerometer.Range.k16G.toString());

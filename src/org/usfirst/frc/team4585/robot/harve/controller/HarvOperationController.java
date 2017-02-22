@@ -6,7 +6,7 @@ import org.usfirst.frc.team4585.robot.harve.view.*;
 import org.usfirst.frc.team4585.robot.harve.model.Shooter;
 import org.usfirst.frc.team4585.robot.harve.model.drive.HarvDrive;
 import org.usfirst.frc.team4585.robot.harve.model.sensors.HRLV_MaxSonar_EZ_Analog;
-import org.usfirst.frc.team4585.robot.harve.model.sensors.Sensors;
+import org.usfirst.frc.team4585.robot.harve.model.sensors.Gyroscope;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -15,7 +15,7 @@ public class HarvOperationController {
 	private HarvInput driveInput;
 	private HarvInput weaponsInput;
 	private SmartDashboard dashboard;
-	private Sensors sensors;
+	private Gyroscope sensors;
 	private HRLV_MaxSonar_EZ_Analog sonar;
 	private Climber climber;
 	private Shooter shooter;

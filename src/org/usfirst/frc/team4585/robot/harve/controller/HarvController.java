@@ -7,7 +7,7 @@ import org.usfirst.frc.team4585.robot.harve.model.drive.DefaultDrive;
 import org.usfirst.frc.team4585.robot.harve.model.drive.HarvDrive;
 import org.usfirst.frc.team4585.robot.harve.model.drive.MecanumDrive;
 import org.usfirst.frc.team4585.robot.harve.model.sensors.HRLV_MaxSonar_EZ_Analog;
-import org.usfirst.frc.team4585.robot.harve.model.sensors.Sensors;
+import org.usfirst.frc.team4585.robot.harve.model.sensors.Gyroscope;
 import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
 import org.usfirst.frc.team4585.robot.harve.view.*;
 
@@ -16,7 +16,7 @@ public class HarvController {
 	FlightStick input;
 	HarvAutoController autonomous;
 	SmartDashboard dashboard;
-	Sensors sensors;
+	Gyroscope sensors;
 	HRLV_MaxSonar_EZ_Analog sonar;
 	Shooter shooter;
 	Climber climber;
@@ -43,7 +43,7 @@ public class HarvController {
 		input = new FlightStick(0);
 		autonomous = new HarvAutoController();
 		dashboard = new SmartDashboard();
-		sensors = new Sensors();
+		sensors = new Gyroscope();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
 		shooter = new Shooter(3);//port three is open
 		climber = new Climber(2);

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4585.robot.harve.model;
 
+import org.usfirst.frc.team4585.robot.harve.model.sensors.CimCoder;
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Encoder;
 public class Shooter {
 	private boolean isEncoderShoot;
 	private boolean shootByDistance;
@@ -17,7 +17,7 @@ public class Shooter {
 	private int wheelPort, encoderPort;
 	
 	private Spark wheel;
-	private Encoder wheelEncoder;
+	private CimCoder encoder;
 	
 	public Shooter(){//default constructor
 		wheelSpeedCoeff = 1;
@@ -34,16 +34,10 @@ public class Shooter {
 		wheel = new Spark(wheelPort);
 	}
 	
-	public Shooter (int wheelPort, int encoderPort){
-		this();
-		wheel = new Spark(wheelPort);
-		wheelEncoder = new Encoder(encoderPort,0);
-	}
-	
 	public Shooter(int wheelPort, int encoderPortA, int encoderPortB){
 		this();
 		wheel = new Spark(wheelPort);
-		wheelEncoder = new Encoder(encoderPortA,encoderPortB);
+		encoder = new CimCoder(encoderPortA,encoderPortB);
 	}
 	
 	private void findLaunchDistance(){//finds distance from ball at project ft/s at 70degrees
@@ -59,11 +53,11 @@ public class Shooter {
 	
 	private void encoderShoot(){
 		//find the amount of power to apply to the motor to get the required wheel speed
-		if(wheelSpeed < wheelEncoder.getRate()){
+		if(wheelSpeed < encoder.getFPS()){
 			if(wheelMagnitude < 1)
-				wheelMagnitude += (wheelSpeed - wheelEncoder.getRate()) * (1/20);
-			}else if(wheelSpeed > wheelEncoder.getRate()){
-				wheelMagnitude -= (wheelSpeed - wheelEncoder.getRate()) * (1/20);
+				wheelMagnitude += (wheelSpeed - encoder.getFPS()) * (1/20);
+			}else if(wheelSpeed > encoder.getFPS()){
+				wheelMagnitude -= (wheelSpeed - encoder.getFPS()) * (1/20);
 			}
 		
 		this.shoot(wheelMagnitude);
@@ -74,7 +68,7 @@ public class Shooter {
 	}
 	
 	private double calculateDistance(){
-		distance = wheelEncoder.getRate() * 1/*distance thing */;
+		distance = encoder.getFPS() * 1/*distance thing */;
 		return distance;
 	}
 	
