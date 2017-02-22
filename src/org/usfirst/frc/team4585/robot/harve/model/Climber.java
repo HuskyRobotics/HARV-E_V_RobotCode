@@ -10,7 +10,7 @@ public class Climber {
 	SmartDashboard dashboard;
 
 	double speed = 0;
-	int speedCoeff = -1; // this is here to reverse the motor if needed
+	int speedCoeff = 1; // this is here to reverse the motor if needed
 	Talon motor;
 	boolean climb=false;
 

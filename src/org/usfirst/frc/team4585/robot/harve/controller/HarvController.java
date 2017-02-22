@@ -74,9 +74,9 @@ public class HarvController {
 		
 		if(input.buttonIsPressed(5)){
 			if(isFastClimber){
-				climber.setSpeed(1);
+				climber.setSpeed(.95);
 			}else{
-				climber.setSpeed(0.25);
+				climber.setSpeed(0.5);
 			}
 			climber.setClimb(true);
 		}else{
