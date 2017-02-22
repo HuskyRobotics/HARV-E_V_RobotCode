@@ -64,7 +64,7 @@ public class Loader {
 		}
 	}
 	
-	private void setSpeed(double speed){
+	public void setSpeed(double speed){
 		this.speed = speed;
 		if(isSetBySpeed == false){
 			this.isSetBySpeed = true;
@@ -73,7 +73,7 @@ public class Loader {
 		}
 	}
 	
-	private void setMagnitude(double magnitude){
+	public void setMagnitude(double magnitude){
 		this.magnitude = magnitude;
 		if(isSetByMagnitude == false){
 			this.isSetByMagnitude = true;
@@ -82,7 +82,7 @@ public class Loader {
 		}
 	}
 	
-	private void setBallsPerSecond(double ballsPerSecond){
+	public void setBallsPerSecond(double ballsPerSecond){
 		this.ballsPerSecond = ballsPerSecond;
 		if(isSetByBallsPerSecond == false){
 			this.isSetByBallsPerSecond = true;

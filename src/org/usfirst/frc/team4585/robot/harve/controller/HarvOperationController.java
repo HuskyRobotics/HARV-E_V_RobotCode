@@ -59,19 +59,25 @@ public class HarvOperationController {
 	}
 	
 	public void start(){
-		driveInput.update();
 		driveControll();
 		weaponsControll();
 	}
 	
 	private void driveControll(){
+		driveInput.update();
 		this.augmentedDriveControll();
 	}
 	
 	private void weaponsControll(){
-		updateClimber();
-		updateShooter();
-		updateLoader();
+		weaponsInput.update();
+		if(!(align)){
+			updateClimber();
+			updateShooter();
+			updateLoader();
+			checkAutoAlign();
+		}else{
+			updateAutoAlign();
+		}
 	}
 	
 	private void updateShooter(){
@@ -101,6 +107,7 @@ public class HarvOperationController {
 		}else{
 			loader.setIsLoading(false);
 		}
+		loader.setSpeed(0.5);
 		
 		loader.update();
 	}
@@ -127,17 +134,19 @@ public class HarvOperationController {
 		climber.update();
 	}
 	
-	private void autoAlign(){
+	private void checkAutoAlign(){
 		if(this.weaponsInput.buttonIsPressed(this.weaponsAutoAlign)){
 			if(align){
 				setAlign = false;
 			}else
 				setAlign = true;
+		}else{
+			align = setAlign;
 		}
-		if(align){
-			
-		}
-		isAligned = true;
+	}
+	
+	private void updateAutoAlign(){
+		
 	}
 	
 	private void augmentedDriveControll(){
