@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Encoder;
 public class Shooter {
 	private boolean isEncoderShoot;
 	private boolean shootByDistance;
+	private boolean isShooting;
 	private final double maxWheelSpeed = 1;
 	private double wheelSpeed;//in rotations per second
 	private final double wheelSpeedCoeff; //what to multiply against wheel speed to get the speed of the ball
@@ -64,11 +65,12 @@ public class Shooter {
 			}else if(wheelSpeed > wheelEncoder.getRate()){
 				wheelMagnitude -= (wheelSpeed - wheelEncoder.getRate()) * (1/20);
 			}
+		
 		this.shoot(wheelMagnitude);
 	}
 	
-	private void shoot(double speed){
-		wheel.set(speed);
+	private void shoot(double magnitude){
+		wheel.set(magnitude);
 	}
 	
 	private double calculateDistance(){
@@ -77,15 +79,23 @@ public class Shooter {
 	}
 	
 	private void updateWheelSpeed(){
-		if(isEncoderShoot){
-			encoderShoot();
+		if(isShooting){
+			if(isEncoderShoot){
+				encoderShoot();
+			}else{
+				shoot(wheelMagnitude);
+			}
 		}else{
-			shoot(wheelMagnitude);
+			shoot(0);
 		}
 	}
 	
 	public void update(){
 		this.updateWheelSpeed();//blalbalba
+	}
+	
+	public void setIsShooting(boolean isShooting){
+		this.isShooting = isShooting;
 	}
 	
 	public void setWheelMagnitude(double wheelMagnitude){

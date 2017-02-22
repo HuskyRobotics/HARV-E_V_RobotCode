@@ -25,6 +25,7 @@ public class HarvOperationController {
 	private double rotLimit;
 	private double time;
 	private double millisPerIteration;
+	private double distanceToGoal;
 	
 	private int weaponsTriger, weaponsToggle, weaponsAutoAlign, weaponsClimberToggle, weaponsClimberSpeedToggle;//undefiend buttons incase of useing a different controller.
 	private int driveXAxis, driveYAxis, driveZAxis;
