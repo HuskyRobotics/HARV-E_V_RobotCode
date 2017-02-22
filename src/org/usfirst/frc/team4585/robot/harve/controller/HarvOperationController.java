@@ -70,6 +70,8 @@ public class HarvOperationController {
 	
 	private void weaponsControll(){
 		updateClimber();
+		updateShooter();
+		updateLoader();
 	}
 	
 	private void updateShooter(){
@@ -84,10 +86,24 @@ public class HarvOperationController {
 		if(weaponsInput.buttonIsPressed(this.weaponsTriger)){
 			
 		}
+		
+		if(isShooting){
+			shooter.setDistance(distanceToGoal);
+			shooter.setIsShooting(true);
+		}else{
+			shooter.setIsShooting(false);
+		}
+		
+		shooter.update();
+	}
+	
+	private void updateLoader(){
+		
+		
+		loader.update();
 	}
 	
 	private void updateClimber(){
-		
 		if(weaponsInput.buttonIsPressed(this.weaponsClimberSpeedToggle)){//toggles the speed of the climber
 			if(this.isFastClimber){
 				this.changeIsFastClimber = false;
@@ -106,6 +122,7 @@ public class HarvOperationController {
 			this.climber.setClimb(true);
 		else
 			this.climber.setClimb(false);
+		climber.update();
 	}
 	
 	private void autoAlign(){
