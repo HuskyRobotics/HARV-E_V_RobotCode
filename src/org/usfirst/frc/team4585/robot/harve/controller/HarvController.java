@@ -11,7 +11,6 @@ import org.usfirst.frc.team4585.robot.harve.model.sensors.Gyroscope;
 import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
 import org.usfirst.frc.team4585.robot.harve.view.*;
 
-@SuppressWarnings({ "static-access", "static-access" })
 public class HarvController {
 	HarvOperationController operation;
 	HarvDrive drive;
@@ -52,7 +51,6 @@ public class HarvController {
 		climber = new Climber(2);
 		loader = new Loader(4);
 		time = 0;
-		operation = new HarvOperationController(drive,shooter,loader,climber,driveInput,weaponsInput);
 	}
 	
 	private void showInformation() {
@@ -101,10 +99,6 @@ public class HarvController {
 		time = System.currentTimeMillis();
 		driveInput.makeRound(true);
 		sensors.calibrateGyro();
-		
-		operation.setWeaponsClimberSpeedToggle(5);
-		operation.setWeaponsClimberToggle(3);
-		operation.setWeaponsToggle(2);
 	}
 
 	public void autonomous() {
@@ -127,7 +121,6 @@ public class HarvController {
 //			drive.update(-magY, magRot);
 //
 //			time = System.currentTimeMillis();
-			operation.start();
 		}
 	}
 	
