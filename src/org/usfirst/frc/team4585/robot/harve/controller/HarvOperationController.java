@@ -18,8 +18,13 @@ public class HarvOperationController {
 	private HarvInput driveInput;
 	private HarvInput weaponsInput;
 	
+	private Axis driveRotation, driveForward, driveSidways;
+	private Axis driveForwardLeft, driveForwardRight;
+	private Axis driveSidwaysLeft, driveSidwaysRight;
+	
 	private double magX, magY, magRot;
 	private double distanceToTarget;
+	private double slowClimbSpeed, fastClimbSpeed;
 	
 	private int millisPerIteration;
 	private int time;
@@ -60,7 +65,7 @@ public class HarvOperationController {
 	}
 	
 	public void init(){
-		
+		loader.setRPS(2);
 	}
 	
 	public void update(){
@@ -98,7 +103,19 @@ public class HarvOperationController {
 	}
 	
 	private void updateLoader(){
-
+		if(this.weaponsInput.buttonIsPressed(weaponsButtonLoad)){
+			if(isLoading){
+				changeIsLoading = false;
+			}else{
+				changeIsLoading = true;
+			}
+		}else{
+			isLoading = changeIsLoading;
+		}
+		
+		if(isLoading && shooter.getIsReady()){
+			loader.setIsLoading(true);
+		}
 	}
 	
 	private void updateClimber(){
@@ -124,9 +141,9 @@ public class HarvOperationController {
 		if(isClimbing){
 			climber.setClimb(true);
 			if(isFastClimbing){
-				climber.setSpeed(1);
+				climber.setSpeed(this.fastClimbSpeed);
 			}else{
-				climber.setSpeed(0.5);
+				climber.setSpeed(this.slowClimbSpeed);
 			}
 		}else{
 			climber.setClimb(false);
@@ -134,11 +151,31 @@ public class HarvOperationController {
 		climber.update();
 	}
 	
-	public void setWeaponsButtons(int shoot, int load, int climb){
+	public void setWeaponsButtons(int shoot, int load, int climb, int changeClimbSpeed){
+		this.weaponsButtonShoot = shoot;
+		this.weaponsButtonLoad = climb;
+		this.weaponsButtonClimb = climb;
+		this.weaponsButtonChangeClimbSpeed = changeClimbSpeed;
+	}
+	
+	public void setWeaponsAxis(){
 		
 	}
 	
 	public void setDriveButtons(int allign){
-		
+		this.driveButtonAllign = allign;
+	}
+	
+	public void setDriveAxis(Axis rotation, Axis forward, Axis sidways){
+		this.driveRotation = rotation;
+		this.driveForward = forward;
+		this.driveSidways = sidways;
+	}
+	
+	public void setDriveAxis(Axis forwardLeft, Axis forwardRight, Axis sidwaysLeft, Axis sidwaysRight){
+		this.driveForwardLeft = forwardLeft;
+		this.driveForwardRight = forwardRight;
+		this.driveSidwaysLeft = sidwaysLeft;
+		this.driveSidwaysRight = sidwaysRight;
 	}
 }

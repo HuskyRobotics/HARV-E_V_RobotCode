@@ -20,10 +20,13 @@ public class Shooter {
 
 	private Spark wheel;
 	private CimCoder encoder;
+	
+	private boolean isReady;
 
 	public Shooter() {// default constructor
 		wheelSpeedCoeff = 1;
 		isEncoderShoot = false;
+		isReady = false;
 		tolerance = .1;
 		wheelSpeed = 0;
 		distance = 0;
@@ -96,6 +99,10 @@ public class Shooter {
 
 	public boolean getIsEncoderShoot() {
 		return this.isEncoderShoot;
+	}
+	
+	public boolean getIsReady(){
+		return this.isReady;
 	}
 	public void stop(){
 		setRPS(0);
