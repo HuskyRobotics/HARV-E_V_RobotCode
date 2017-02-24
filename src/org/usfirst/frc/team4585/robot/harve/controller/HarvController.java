@@ -53,6 +53,8 @@ public class HarvController {
 		loader = new Loader(4);
 		time = 0;
 		operationController= new HarvOperationController(drive,shooter,loader,climber,driveInput,weaponsInput,gyro);
+		operationController.setWeaponsButtons(XBoxButtons.A.getValue(), XBoxButtons.X.getValue(), XBoxButtons.B.getValue(), XBoxButtons.Y.getValue());
+		operationController.setDriveButtons(1);
 	}
 	
 	private void showInformation() {
