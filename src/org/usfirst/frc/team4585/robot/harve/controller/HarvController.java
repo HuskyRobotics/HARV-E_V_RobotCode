@@ -12,7 +12,7 @@ import org.usfirst.frc.team4585.robot.harve.model.autonomous.*;
 import org.usfirst.frc.team4585.robot.harve.view.*;
 
 public class HarvController {
-	HarvOperationController operation;
+	HarvOperationController operationController;
 	HarvDrive drive;
 	HarvInput driveInput;
 	HarvInput weaponsInput;
@@ -119,7 +119,7 @@ public class HarvController {
 //			showInformation();
 //			drive.update(-magY, magRot);
 //
-//			time = System.currentTimeMillis();
+			time = System.currentTimeMillis();
 		}
 	}
 	

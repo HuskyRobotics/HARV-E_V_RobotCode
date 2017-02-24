@@ -106,8 +106,7 @@ public class Shooter {
 	}
 	public void stop(){
 		setRPS(0);
-		update();
-		
+		update();		
 	}
 
 }

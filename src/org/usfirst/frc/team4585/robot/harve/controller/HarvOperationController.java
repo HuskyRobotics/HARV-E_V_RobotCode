@@ -28,8 +28,8 @@ public class HarvOperationController {
 	private double distanceToTarget;
 	private double slowClimbSpeed, fastClimbSpeed;
 
-	private int millisPerIteration;
-	private int time;
+	private long millisPerIteration;
+	private long time;
 	private int weaponsButtonShoot;
 	private int weaponsButtonLoad;
 	private int weaponsButtonClimb;
@@ -55,6 +55,8 @@ public class HarvOperationController {
 		magY = 0;
 		magRot = 0;
 		distanceToTarget = 0;
+		millisPerIteration = 20;
+		time = 0;
 		isShooting = false;
 		changeIsShooting = false;
 		isClimbing = false;
@@ -65,8 +67,7 @@ public class HarvOperationController {
 		changeIsLoading = false;
 	}
 
-	public HarvOperationController(HarvDrive drive, Shooter shooter, Loader loader, Climber climber,
-			HarvInput driveInput, HarvInput weaponsInput, Gyroscope gyro) {
+	public HarvOperationController(HarvDrive drive, Shooter shooter, Loader loader, Climber climber,HarvInput driveInput, HarvInput weaponsInput, Gyroscope gyro) {
 		this();
 		this.drive = drive;
 		this.shooter = shooter;
@@ -78,7 +79,10 @@ public class HarvOperationController {
 	}
 
 	public void start() {
-
+		if(time + millisPerIteration < System.currentTimeMillis()){
+			update();
+			time = System.currentTimeMillis();
+		}
 	}
 
 	public void init() {
@@ -143,7 +147,7 @@ public class HarvOperationController {
 	
 	private void tankDrive(){
 		magY = (driveInput.getInput(driveForwardLeft)+ driveInput.getInput(driveForwardRight))/2;
-		magRot = driveInput.getInput(driveForwardLeft) - driveInput.getInput(driveForwardRight);
+		magRot = (driveInput.getInput(driveForwardLeft)/2) - (driveInput.getInput(driveForwardRight)/2);
 		magX = (driveInput.getInput(driveSidwaysLeft)+driveInput.getInput(driveSidwaysRight))/2;
 	}
 	
