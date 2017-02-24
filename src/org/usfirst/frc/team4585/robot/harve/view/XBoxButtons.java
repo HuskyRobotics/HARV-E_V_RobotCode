@@ -10,13 +10,12 @@ public enum XBoxButtons {
 	SELECT(7),
 	START(8),
 	LSTICK(9),
-	RSTICK(10)
-	;
+	RSTICK(10);
 	private  int value;
 	XBoxButtons(int value){
 		this.value = value;
 	}
-	
+
 	public int getValue(){
 		return this.value;
 	}
