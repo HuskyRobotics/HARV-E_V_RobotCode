@@ -17,10 +17,12 @@ public class HarvOperationController {
 	private Loader loader;
 	private HarvInput driveInput;
 	private HarvInput weaponsInput;
+	private Gyroscope gyro;
 
 	private Axis driveRotation, driveForward, driveSidways;
 	private Axis driveForwardLeft, driveForwardRight;
 	private Axis driveSidwaysLeft, driveSidwaysRight;
+	private DriveMode driveMode;
 
 	private double magX, magY, magRot;
 	private double distanceToTarget;
@@ -32,15 +34,23 @@ public class HarvOperationController {
 	private int weaponsButtonLoad;
 	private int weaponsButtonClimb;
 	private int weaponsButtonChangeClimbSpeed;
-
 	private int driveButtonAllign;
 
 	private boolean isShooting, changeIsShooting;
 	private boolean isClimbing, changeIsClimbing;
 	private boolean isFastClimbing, changeIsFastClimbing;
 	private boolean isLoading, changeIsLoading;
+	private boolean isAligning, changeIsAligning;
 
 	private HarvOperationController() {
+		driveRotation = Axis.Z;
+		driveForward = Axis.Y;
+		driveSidways = Axis.Z;
+		driveForwardLeft = Axis.Y;
+		driveForwardRight = Axis.Y2;
+		driveSidwaysLeft = Axis.X;
+		driveSidwaysLeft = Axis.X2;
+		driveMode = DriveMode.DefaultDrive;
 		magX = 0;
 		magY = 0;
 		magRot = 0;
@@ -56,7 +66,7 @@ public class HarvOperationController {
 	}
 
 	public HarvOperationController(HarvDrive drive, Shooter shooter, Loader loader, Climber climber,
-			HarvInput driveInput, HarvInput weaponsInput) {
+			HarvInput driveInput, HarvInput weaponsInput, Gyroscope gyro) {
 		this();
 		this.drive = drive;
 		this.shooter = shooter;
@@ -64,6 +74,7 @@ public class HarvOperationController {
 		this.climber = climber;
 		this.driveInput = driveInput;
 		this.weaponsInput = weaponsInput;
+		this.gyro = gyro;
 	}
 
 	public void start() {
@@ -86,19 +97,59 @@ public class HarvOperationController {
 	}
 
 	private void updateDrive() {
-
+		if(this.driveInput.buttonIsPressed(this.driveButtonAllign)){
+			if(isAligning){
+				changeIsAligning = false;
+			}else{
+				changeIsAligning = true;
+			}
+		}else{
+			isAligning = changeIsAligning;
+		}
+		if(isAligning){
+			updateAlignment();
+		}else{
+			augmentedDrive();
+		}
+		
+		drive.update(magX, magY, magRot);
 	}
 
 	private void augmentedDrive(){
-//			magX = input.getInput(Axis.X);
-//			magY = input.getAxis(Axis.Y);
-//			magRot = input.getAxis(Axis.Z);
-//			if(input.getAxis(Axis.Z) > 0 || input.getAxis(Axis.Z) < 0){
-//			magX = driveInput.getInput(Axis.X);
-//			magY = driveInput.getAxis(Axis.Y);
-//			magRot = driveInput.getAxis(Axis.Z);
-//			if(driveInput.getAxis(Axis.Z) > 0 || driveInput.getAxis(Axis.Z) < 0){
-//				sensors.reset();
+		if(this.driveMode == DriveMode.ArcadeDrive){
+			this.arcadeDrive();
+		}else if(this.driveMode == DriveMode.TankDrive){
+			this.tankDrive();
+		}else{
+			this.defaultDrive();
+		}
+		if(driveInput.getInput(driveRotation) > 0 || driveInput.getInput(driveRotation) < 0){
+			gyro.reset();
+		}else{
+			magRot = gyro.getAngle()*0.0360 + Math.copySign(0.11, gyro.getAngle());
+		}
+	}
+	
+	private void defaultDrive(){
+		magY = driveInput.getInput(this.driveForward);
+		magRot = driveInput.getInput(this.driveRotation);
+	}
+	
+	private void arcadeDrive(){
+		magY = driveInput.getInput(driveForward);
+		magX = driveInput.getInput(driveSidways);
+		magRot = driveInput.getInput(driveRotation);
+	}
+	
+	private void tankDrive(){
+		magY = (driveInput.getInput(driveForwardLeft)+ driveInput.getInput(driveForwardRight))/2;
+		magRot = driveInput.getInput(driveForwardLeft) - driveInput.getInput(driveForwardRight);
+		magX = (driveInput.getInput(driveSidwaysLeft)+driveInput.getInput(driveSidwaysRight))/2;
+	}
+	
+	private void updateAlignment(){
+		
+		gyro.reset();
 	}
 
 	private void updateShooter() {
@@ -195,5 +246,9 @@ public class HarvOperationController {
 		this.driveForwardRight = forwardRight;
 		this.driveSidwaysLeft = sidwaysLeft;
 		this.driveSidwaysRight = sidwaysRight;
+	}
+	
+	public void setMillisPerIteration(int millis){
+		this.millisPerIteration = millis;
 	}
 }

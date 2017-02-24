@@ -98,7 +98,6 @@ public class HarvController {
 	public void robotInit() {
 		time = System.currentTimeMillis();
 		driveInput.makeRound(true);
-		sensors.calibrateGyro();
 	}
 
 	public void autonomous() {
