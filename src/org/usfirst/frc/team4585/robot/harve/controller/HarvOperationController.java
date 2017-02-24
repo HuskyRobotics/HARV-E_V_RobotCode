@@ -46,10 +46,10 @@ public class HarvOperationController {
 		driveRotation = Axis.Z;
 		driveForward = Axis.Y;
 		driveSidways = Axis.Z;
-		driveForwardLeft = Axis.Y;
-		driveForwardRight = Axis.Y2;
-		driveSidwaysLeft = Axis.X;
-		driveSidwaysLeft = Axis.X2;
+		driveForwardLeft = Axis.LY;
+		driveForwardRight = Axis.RY;
+		driveSidwaysLeft = Axis.LX;
+		driveSidwaysLeft = Axis.RX;
 		driveMode = DriveMode.DefaultDrive;
 		magX = 0;
 		magY = 0;
