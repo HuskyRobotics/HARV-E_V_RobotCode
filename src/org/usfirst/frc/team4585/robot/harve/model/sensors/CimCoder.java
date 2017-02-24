@@ -17,18 +17,16 @@ public class CimCoder {
 	
 	public double getRPS(){
 		return encoder.getRate();
-		
 	}
 	
 	public double getFPS(){
-		
 		return getRPS()*(wheelCircumfrence/12);
 	}
 	
 	public void setWheelRadiusInches(double inches){
 		this.wheelCircumfrence=2*Math.PI*inches;
-		
 	}
+	
 	public void setWheelRadiusCentimeters(double Centimeters){
 		setWheelRadiusInches(0.393701*Centimeters);
 		
