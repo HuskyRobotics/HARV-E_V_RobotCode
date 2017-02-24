@@ -18,7 +18,7 @@ public class HarvController {
 	HarvInput weaponsInput;
 	HarvAutoController autonomous;
 	SmartDashboard dashboard;
-	Gyroscope sensors;
+	Gyroscope gyro;
 	HRLV_MaxSonar_EZ_Analog sonar;
 	Shooter shooter;
 	Climber climber;
@@ -46,13 +46,13 @@ public class HarvController {
 		weaponsInput = new FlightStick(1);
 		autonomous = new HarvAutoController();
 		dashboard = new SmartDashboard();
-		sensors = new Gyroscope();
+		gyro = new Gyroscope();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
 		shooter = new Shooter(3);
 		climber = new Climber(2);
 		loader = new Loader(4);
 		time = 0;
-		operationController= new HarvOperationController(drive,shooter,loader,climber,driveInput,weaponsInput,sensors);
+		operationController= new HarvOperationController(drive,shooter,loader,climber,driveInput,weaponsInput,gyro);
 	}
 	
 	private void showInformation() {
