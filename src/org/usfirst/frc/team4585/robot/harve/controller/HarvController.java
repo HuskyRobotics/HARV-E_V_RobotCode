@@ -43,6 +43,7 @@ public class HarvController {
 		millisPerIteration = 20;
 		drive = new DefaultDrive(0, 1);
 		driveInput = new FlightStick(0);
+		weaponsInput = new FlightStick(1);
 		autonomous = new HarvAutoController();
 		dashboard = new SmartDashboard();
 		sensors = new Gyroscope();
@@ -51,6 +52,7 @@ public class HarvController {
 		climber = new Climber(2);
 		loader = new Loader(4);
 		time = 0;
+		operationController= new HarvOperationController(drive,shooter,loader,climber,driveInput,weaponsInput,sensors);
 	}
 	
 	private void showInformation() {
