@@ -45,7 +45,7 @@ public class HarvOperationController {
 	private HarvOperationController() {
 		driveRotation = Axis.Z;
 		driveForward = Axis.Y;
-		driveSidways = Axis.Z;
+		driveSidways = Axis.X;
 		driveForwardLeft = Axis.LY;
 		driveForwardRight = Axis.RY;
 		driveSidwaysLeft = Axis.LX;

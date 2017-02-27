@@ -110,7 +110,6 @@ public class HarvController {
 	}
 
 	public void operatorControl() {
-		
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
 			showInformation();
 //			input.update();
