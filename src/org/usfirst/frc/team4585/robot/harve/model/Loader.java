@@ -48,5 +48,36 @@ public class Loader {
 	public void setIsLoading(boolean isLoading){
 		this.isLoading = isLoading;
 	}
-	
+
+	public Spark getSpinner() {
+		return spinner;
+	}
+
+	public CimCoder getEncoder() {
+		return encoder;
+	}
+
+	public boolean isLoading() {
+		return isLoading;
+	}
+
+	public double getTargetRPS() {
+		return targetRPS;
+	}
+
+	public int getDirection() {
+		return direction;
+	}
+
+	public double getWheelMagnitude() {
+		return wheelMagnitude;
+	}
+
+	public double getRPS() {
+		return RPS;
+	}
+
+	public double getAgression() {
+		return agression;
+	}
 }
