@@ -43,7 +43,7 @@ public class HarvController {
 		millisPerIteration = 20;
 		drive = new DefaultDrive(0, 1);
 		driveInput = new FlightStick(0);
-		weaponsInput = new FlightStick(1);
+		weaponsInput = new XBoxGamePad(1);
 		autonomous = new HarvAutoController();
 		dashboard = new SmartDashboard();
 		gyro = new Gyroscope();

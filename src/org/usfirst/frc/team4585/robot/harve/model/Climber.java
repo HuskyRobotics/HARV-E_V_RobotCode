@@ -42,5 +42,16 @@ public class Climber {
 		else
 			motor.set(0);
 	}
-
+	
+	public double getSpeed(){
+		return this.speed;
+	}
+	
+	public double getSpeedCoeff(){
+		return this.speedCoeff;
+	}
+	
+	public boolean getClimb(){
+		return this.climb;
+	}
 }
