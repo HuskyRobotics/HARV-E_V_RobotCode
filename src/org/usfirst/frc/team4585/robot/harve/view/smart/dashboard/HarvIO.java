@@ -3,31 +3,45 @@ package org.usfirst.frc.team4585.robot.harve.view.smart.dashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
+import java.util.ArrayList;
 
 public class HarvIO {
 	private ITable toggleTable;
-	private SendableChooser<Boolean> toggles;
+	private SendableChooser toggleChooser;
+	private ArrayList<Boolean> toggles;
 	private SmartDashboard smartDashboard;
 	
 	public HarvIO(){
 		smartDashboard = new SmartDashboard();
-		toggles = new SendableChooser<Boolean>();
+		toggleChooser = new SendableChooser();
 	}
 	
 	public void init(){
-		toggles.initTable(toggleTable);
-		toggles.addDefault("toggles", Boolean.FALSE);
+		toggleChooser.addDefault("default auto", new Boolean(false));
 	}
 	
 	public void addTogle(String key){//adds a toggle with the key you give it
-		toggles.getTable().putBoolean(key, false);
+		Boolean toggle = new Boolean(key);
+		toggles.add(toggle);
+		toggleChooser.addDefault(key, toggle);
 	}
 	
 	public boolean getTogleValue(String key){
-		return toggles.getTable().getBoolean(key, false);
+		boolean toggleValue = false;
+		for(Boolean toggle:toggles){
+			if((Boolean)toggleChooser.getSelected().equals(toggle)){
+				if(toggle)
+					toggleValue = toggle.booleanValue();
+			}
+		}
+		return toggleValue;
 	}
 	
 	public void setTogleValue(String key){
-		toggles.getTable().putBoolean(key, false);
+		toggleChooser.getTable().putBoolean(key, false);
+	}
+	
+	public void update(){
+		
 	}
 }
