@@ -31,7 +31,6 @@ public class Shooter {
 		wheelSpeed = 0;
 		distance = 0;
 		wheelMagnitude = 0;
-
 	}
 
 	public Shooter(int wheelPort) {
@@ -67,7 +66,6 @@ public class Shooter {
 			if(Math.abs(RPS-targetRPS)>tolerance){
 				wheelMagnitude+=(targetRPS-RPS);
 				wheel.set(wheelMagnitude);
-			
 			}
 
 		} else {
@@ -109,4 +107,47 @@ public class Shooter {
 		update();		
 	}
 
+	public boolean isShootByDistance() {
+		return shootByDistance;
+	}
+
+	public boolean isShooting() {
+		return isShooting;
+	}
+
+	public double getMaxWheelSpeed() {
+		return maxWheelSpeed;
+	}
+
+	public double getWheelSpeed() {
+		return wheelSpeed;
+	}
+
+	public double getWheelSpeedCoeff() {
+		return wheelSpeedCoeff;
+	}
+
+	public double getWheelMagnitude() {
+		return wheelMagnitude;
+	}
+
+	public double getTolerance() {
+		return tolerance;
+	}
+
+	public double getLaunchDistance() {
+		return launchDistance;
+	}
+
+	public double getLaunchCoeff() {
+		return launchCoeff;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public double getTargetRPS() {
+		return targetRPS;
+	}
 }
