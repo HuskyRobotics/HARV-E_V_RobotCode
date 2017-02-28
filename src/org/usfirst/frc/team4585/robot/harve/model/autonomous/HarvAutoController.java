@@ -42,7 +42,7 @@ public class HarvAutoController {
 		millisPerIteration = 20;
 	}
 	
-	public HarvAutoController(Shooter shooter,Loader loader, Climber climber,HarvDrive drive){
+	public HarvAutoController(HarvDrive drive,Shooter shooter,Loader loader, Climber climber){
 		this();
 		this.shooter = shooter;
 		this.loader = loader;
