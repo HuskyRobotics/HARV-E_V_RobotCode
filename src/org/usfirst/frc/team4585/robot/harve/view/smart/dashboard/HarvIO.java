@@ -2,46 +2,61 @@ package org.usfirst.frc.team4585.robot.harve.view.smart.dashboard;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.tables.ITable;
 import java.util.ArrayList;
 
 public class HarvIO {
 	private ITable toggleTable;
+	private Preferences prefs;
 	private SendableChooser toggleChooser;
-	private ArrayList<Boolean> toggles;
+	private ArrayList<Toggle> toggles;
 	private SmartDashboard smartDashboard;
 	
 	public HarvIO(){
 		smartDashboard = new SmartDashboard();
 		toggleChooser = new SendableChooser();
+		toggles = new ArrayList<Toggle>();
 	}
 	
 	public void init(){
-		toggleChooser.addDefault("default auto", new Boolean(false));
+		prefs = Preferences.getInstance();
 	}
 	
-	public void addTogle(String key){//adds a toggle with the key you give it
-		Boolean toggle = new Boolean(key);
+	public void putInformation(String key,Boolean value){
+		SmartDashboard.putBoolean(key,value);
+	}
+	
+	public void putInformation(String key,double value){
+		SmartDashboard.putNumber(key, (double) value);
+	}
+	
+	public void putInformation(String key, String value){
+		SmartDashboard.putString(key, value);
+	}
+	
+	public void addToggle(String name){
+		Toggle toggle = new Toggle(name);
 		toggles.add(toggle);
-		toggleChooser.addDefault(key, toggle);
+		prefs.putBoolean(name, false);
+		toggle.setValue(prefs.getBoolean(name, false));
 	}
 	
-	public boolean getTogleValue(String key){
-		boolean toggleValue = false;
-		for(Boolean toggle:toggles){
-			if((Boolean)toggleChooser.getSelected().equals(toggle)){
-				if(toggle)
-					toggleValue = toggle.booleanValue();
+	public boolean getToggle(String key){
+		boolean returnValue = false;
+		for(Toggle toggle: toggles){
+			if(toggle.getName().equals(key)){
+				returnValue = toggle.getValue();
+				break;
 			}
 		}
-		return toggleValue;
-	}
-	
-	public void setTogleValue(String key){
-		toggleChooser.getTable().putBoolean(key, false);
+		return returnValue;
 	}
 	
 	public void update(){
-		
+		for(Toggle toggle: toggles){
+			toggle.setValue(prefs.getBoolean(toggle.getName(), false));
+		}
 	}
 }
