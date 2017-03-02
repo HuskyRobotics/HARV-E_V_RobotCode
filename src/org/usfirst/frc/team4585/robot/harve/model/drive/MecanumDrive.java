@@ -30,8 +30,15 @@ public class MecanumDrive extends HarvDrive {
 		speed = 0;
 	}
 	
-	private void updateThreeWheels(){
-		
+	private void updateThreeWheels(double magX, double magY, double magRot){
+		//covert magnitudes to angles
+		double angle = 0;
+		double mag = 0;
+		mag = Math.sqrt(Math.pow(magX,2) + Math.pow(magY,2));
+		angle = Math.atan2(magY, magX);
+		this.wheelMotors[FRONT].set(mag*Math.sin(angle +180+45));
+		this.wheelMotors[LEFT].set(mag*Math.sin(angle + 60+45));
+		this.wheelMotors[RIGHT].set(mag*Math.sin(angle + 300 + 45));
 	}
 
 	@Override
@@ -57,7 +64,7 @@ public class MecanumDrive extends HarvDrive {
 			this.wheelMotors[FRONTRIGHT].set(this.getMagY() + this.getMagX() + this.getMagRot());
 			this.wheelMotors[BACKRIGHT].set(this.getMagY() - this.getMagX() + this.getMagRot());
 		}else{
-			this.updateThreeWheels();
+			this.updateThreeWheels(magX,magY,magRot);
 		}
 	}
 
