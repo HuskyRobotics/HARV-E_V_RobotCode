@@ -10,6 +10,10 @@ public class CimCoder {
 	
 	private double wheelCircumfrence=1;
 	
+	public CimCoder(){//default constructor
+		encoder = new Encoder(0,1);
+	}
+	
 	public CimCoder(int chA, int chB){
 		encoder=new Encoder(chA, chB);
 		encoder.setDistancePerPulse(1/ticksPerRevolution);

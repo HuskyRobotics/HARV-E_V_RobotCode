@@ -36,6 +36,7 @@ public class Shooter {
 	public Shooter(int wheelPort) {
 		this();
 		wheel = new Spark(wheelPort);
+		encoder  = new CimCoder();
 	}
 
 	public Shooter(int wheelPort, int encoderPortA, int encoderPortB) {
@@ -91,6 +92,10 @@ public class Shooter {
 		this.distance = distance;
 	}
 
+	public void setMagnitude(double mag){
+		this.wheelMagnitude = mag;
+	}
+	
 	public double getRPS() {
 		return this.RPS;
 	}

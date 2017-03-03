@@ -45,7 +45,7 @@ public class HarvController {
 		millisPerIteration = 20;
 		drive = new DefaultDrive(0, 1);
 		driveInput = new FlightStick(0);
-		weaponsInput = new XBoxGamePad(1);
+		weaponsInput = new FlightStick(0);
 		dashboard = new SmartDashboard();
 		gyro = new Gyroscope();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
@@ -63,7 +63,7 @@ public class HarvController {
 	private void showInformation() {
 		
 	}
-//	
+
 //	private void updateClimber(){
 //		if(driveInput.buttonIsPressed(2)){
 //			SmartDashboard.putString("Buttons pressed", "yes");
@@ -106,7 +106,6 @@ public class HarvController {
 		operationController.init();
 		autonomousController.init();
 		inputOutput.init();
-		driveInput.makeRound(true);
 	}
 
 	public void autonomous() {
@@ -116,16 +115,7 @@ public class HarvController {
 	public void operatorControl() {
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
 			operationController.update();
-//			input.update();
-//			magY = input.getAxis(Axis.Y);
-//			magRot = input.getAxis(Axis.Z);
-//			
-//			updateClimber();
-//			updateShooter();
-//			
-//			showInformation();
-//			drive.update(-magY, magRot);
-//
+//			this.updateClimber();
 			showInformation();
 			time = System.currentTimeMillis();
 		}

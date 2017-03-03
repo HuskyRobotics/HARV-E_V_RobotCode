@@ -55,6 +55,8 @@ public class HarvOperationController {
 		magY = 0;
 		magRot = 0;
 		distanceToTarget = 0;
+		fastClimbSpeed = 0.95;
+		slowClimbSpeed = 0.5;
 		millisPerIteration = 20;
 		time = 0;
 		isShooting = false;
@@ -63,6 +65,7 @@ public class HarvOperationController {
 		changeIsClimbing = false;
 		isFastClimbing = false;
 		changeIsFastClimbing = false;
+
 		isLoading = false;
 		changeIsLoading = false;
 	}
@@ -152,7 +155,6 @@ public class HarvOperationController {
 	}
 	
 	private void updateAlignment(){
-		
 		gyro.reset();
 	}
 
@@ -226,7 +228,7 @@ public class HarvOperationController {
 
 	public void setWeaponsButtons(int shoot, int load, int climb, int changeClimbSpeed) {
 		this.weaponsButtonShoot = shoot;
-		this.weaponsButtonLoad = climb;
+		this.weaponsButtonLoad = load;
 		this.weaponsButtonClimb = climb;
 		this.weaponsButtonChangeClimbSpeed = changeClimbSpeed;
 	}
