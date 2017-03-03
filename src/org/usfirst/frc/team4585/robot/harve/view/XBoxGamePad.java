@@ -19,7 +19,9 @@ public class XBoxGamePad extends HarvInput{
 	
 	public XBoxGamePad(int port){
 		this();
-		xBoxController.getIsXbox();
+		if(xBoxController.getIsXbox()){
+			xBoxController = new Joystick(port);
+		}
 	}
 	
 	@Override
