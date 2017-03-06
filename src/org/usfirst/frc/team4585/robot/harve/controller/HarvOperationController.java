@@ -123,6 +123,8 @@ public class HarvOperationController {
 	}
 
 	private void augmentedDrive(){
+		magX = driveInput.getAxis(Axis.X);
+		magY = driveInput.getAxis(Axis.Y);
 		if(this.driveMode == DriveMode.ArcadeDrive){
 			this.arcadeDrive();
 		}else if(this.driveMode == DriveMode.TankDrive){
@@ -131,6 +133,7 @@ public class HarvOperationController {
 			this.defaultDrive();
 		}
 		if(driveInput.getInput(driveRotation) > 0 || driveInput.getInput(driveRotation) < 0){
+			magRot = driveInput.getAxis(Axis.Z);
 			gyro.reset();
 		}else{
 			magRot = gyro.getAngle()*0.0360 + Math.copySign(0.11, gyro.getAngle());

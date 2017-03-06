@@ -43,12 +43,12 @@ public class HarvController {
 	public HarvController() {
 		isShooting = false;
 		millisPerIteration = 20;
-		drive = new DefaultDrive(0, 1);
 		driveInput = new FlightStick(0);
 		weaponsInput = new FlightStick(0);
 		dashboard = new SmartDashboard();
 		gyro = new Gyroscope();
 		sonar = new HRLV_MaxSonar_EZ_Analog(0, 20480);
+		drive = new DefaultDrive(0, 1);
 		shooter = new Shooter(3);
 		climber = new Climber(2);
 		loader = new Loader(4);
