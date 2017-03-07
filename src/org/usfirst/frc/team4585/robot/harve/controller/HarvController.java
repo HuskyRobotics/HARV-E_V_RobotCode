@@ -55,13 +55,13 @@ public class HarvController {
 		time = 0;
 		inputOutput = new HarvIO();
 		autonomousController = new HarvAutoController(drive,shooter,loader,climber);
-		operationController= new HarvOperationController(drive,shooter,loader,climber,driveInput,weaponsInput,gyro);
+		operationController= new HarvOperationController(drive,shooter,loader,climber,driveInput,weaponsInput,gyro,dashboard);
 		operationController.setWeaponsButtons(XBoxButtons.A.getValue(), XBoxButtons.X.getValue(), XBoxButtons.B.getValue(), XBoxButtons.Y.getValue());
 		operationController.setDriveButtons(1);
 	}
 	
 	private void showInformation() {
-		
+		operationController.showInformation();
 	}
 
 //	private void updateClimber(){
@@ -103,7 +103,7 @@ public class HarvController {
 
 	public void robotInit() {
 		time = System.currentTimeMillis();
-		operationController.init();
+//		operationController.init();
 		autonomousController.init();
 		inputOutput.init();
 	}
@@ -115,7 +115,6 @@ public class HarvController {
 	public void operatorControl() {
 		if (System.currentTimeMillis() >= time + millisPerIteration) {
 			operationController.update();
-//			this.updateClimber();
 			showInformation();
 			time = System.currentTimeMillis();
 		}
